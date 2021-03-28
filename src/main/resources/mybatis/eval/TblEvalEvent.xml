@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalEventDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalEvent" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="KS_ID" property="ksId" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="STD_ID" property="stdId" jdbcType="VARCHAR" />
+    <result column="EVENT_NAME" property="eventName" jdbcType="VARCHAR" />
+    <result column="EVENT_DATE" property="eventDate" jdbcType="TIMESTAMP" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="IS_SH" property="isSh" jdbcType="VARCHAR" />
+    <result column="SH_RESULT" property="shResult" jdbcType="VARCHAR" />
+    <result column="QR_SCORE" property="qrScore" jdbcType="DECIMAL" />
+    <result column="SH_REMARK" property="shRemark" jdbcType="VARCHAR" />
+    <result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, KS_ID, TYPE_ID, STD_ID, EVENT_NAME, EVENT_DATE, SCORE, STATUS, IS_SH,
+    SH_RESULT, QR_SCORE, SH_REMARK, FILE_URL, REMARK, ADD_TIME, UPDATE_TIME, CREATER,
+    MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalEventExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null and limit!=0" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_eval_event
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_event
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalEventExample" >
+    delete from tbl_eval_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalEvent" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_event (USER_ID, KS_ID,
+      TYPE_ID, STD_ID, EVENT_NAME,
+      EVENT_DATE, SCORE, STATUS,
+      IS_SH, SH_RESULT, QR_SCORE,
+      SH_REMARK, FILE_URL, REMARK,
+      ADD_TIME, UPDATE_TIME, CREATER,
+      MENDER)
+    values (#{userId,jdbcType=VARCHAR}, #{ksId,jdbcType=VARCHAR},
+      #{typeId,jdbcType=VARCHAR}, #{stdId,jdbcType=VARCHAR}, #{eventName,jdbcType=VARCHAR},
+      #{eventDate,jdbcType=TIMESTAMP}, #{score,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR},
+      #{isSh,jdbcType=VARCHAR}, #{shResult,jdbcType=VARCHAR}, #{qrScore,jdbcType=DECIMAL},
+      #{shRemark,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT},
+      #{mender,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalEvent" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="ksId != null" >
+        KS_ID,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="stdId != null" >
+        STD_ID,
+      </if>
+      <if test="eventName != null" >
+        EVENT_NAME,
+      </if>
+      <if test="eventDate != null" >
+        EVENT_DATE,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="isSh != null" >
+        IS_SH,
+      </if>
+      <if test="shResult != null" >
+        SH_RESULT,
+      </if>
+      <if test="qrScore != null" >
+        QR_SCORE,
+      </if>
+      <if test="shRemark != null" >
+        SH_REMARK,
+      </if>
+      <if test="fileUrl != null" >
+        FILE_URL,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="ksId != null" >
+        #{ksId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdId != null" >
+        #{stdId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null" >
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null" >
+        #{eventDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isSh != null" >
+        #{isSh,jdbcType=VARCHAR},
+      </if>
+      <if test="shResult != null" >
+        #{shResult,jdbcType=VARCHAR},
+      </if>
+      <if test="qrScore != null" >
+        #{qrScore,jdbcType=DECIMAL},
+      </if>
+      <if test="shRemark != null" >
+        #{shRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalEventExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_event
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksId != null" >
+        KS_ID = #{record.ksId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stdId != null" >
+        STD_ID = #{record.stdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventName != null" >
+        EVENT_NAME = #{record.eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDate != null" >
+        EVENT_DATE = #{record.eventDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSh != null" >
+        IS_SH = #{record.isSh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shResult != null" >
+        SH_RESULT = #{record.shResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrScore != null" >
+        QR_SCORE = #{record.qrScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shRemark != null" >
+        SH_REMARK = #{record.shRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUrl != null" >
+        FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null" >
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_event
+    set ID = #{record.id,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      KS_ID = #{record.ksId,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      STD_ID = #{record.stdId,jdbcType=VARCHAR},
+      EVENT_NAME = #{record.eventName,jdbcType=VARCHAR},
+      EVENT_DATE = #{record.eventDate,jdbcType=TIMESTAMP},
+      SCORE = #{record.score,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      IS_SH = #{record.isSh,jdbcType=VARCHAR},
+      SH_RESULT = #{record.shResult,jdbcType=VARCHAR},
+      QR_SCORE = #{record.qrScore,jdbcType=DECIMAL},
+      SH_REMARK = #{record.shRemark,jdbcType=VARCHAR},
+      FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{record.creater,jdbcType=BIGINT},
+      MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalEvent" >
+    update tbl_eval_event
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="ksId != null" >
+        KS_ID = #{ksId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdId != null" >
+        STD_ID = #{stdId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null" >
+        EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null" >
+        EVENT_DATE = #{eventDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isSh != null" >
+        IS_SH = #{isSh,jdbcType=VARCHAR},
+      </if>
+      <if test="shResult != null" >
+        SH_RESULT = #{shResult,jdbcType=VARCHAR},
+      </if>
+      <if test="qrScore != null" >
+        QR_SCORE = #{qrScore,jdbcType=DECIMAL},
+      </if>
+      <if test="shRemark != null" >
+        SH_REMARK = #{shRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalEvent" >
+    update tbl_eval_event
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      KS_ID = #{ksId,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      STD_ID = #{stdId,jdbcType=VARCHAR},
+      EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+      EVENT_DATE = #{eventDate,jdbcType=TIMESTAMP},
+      SCORE = #{score,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=VARCHAR},
+      IS_SH = #{isSh,jdbcType=VARCHAR},
+      SH_RESULT = #{shResult,jdbcType=VARCHAR},
+      QR_SCORE = #{qrScore,jdbcType=DECIMAL},
+      SH_REMARK = #{shRemark,jdbcType=VARCHAR},
+      FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=BIGINT},
+      MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectSame" parameterType="cc.water.ciro.eval.domain.EvalEvent" resultType="java.lang.Integer" >
+    SELECT count(*) FROM tbl_eval_event WHERE EVENT_DATE = #{eventDate} AND  USER_ID=#{userId} AND STD_ID=#{stdId}
+    <if test="id != null" >
+      AND id!=#{id}
+    </if>
+  </select>
+
+</mapper>

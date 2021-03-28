@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalZqDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalZq" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CYCLE_TYPE" property="cycleType" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="EVAL_TYPE" property="evalType" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DECIMAL" />
+    <result column="SCORE_MAX" property="scoreMax" jdbcType="VARCHAR" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="EVENT_BEGIN" property="eventBegin" jdbcType="VARCHAR" />
+    <result column="EVENT_END" property="eventEnd" jdbcType="VARCHAR" />
+    <result column="GRZP_BEGIN" property="grzpBegin" jdbcType="VARCHAR" />
+    <result column="GRZP_END" property="grzpEnd" jdbcType="VARCHAR" />
+    <result column="KSEVAL_BEGIN" property="ksevalBegin" jdbcType="VARCHAR" />
+    <result column="KSEVAL_END" property="ksevalEnd" jdbcType="VARCHAR" />
+    <result column="DKEVAL_BEGIN" property="dkevalBegin" jdbcType="VARCHAR" />
+    <result column="DKEVAL_END" property="dkevalEnd" jdbcType="VARCHAR" />
+    <result column="DWEVAL_BEGIN" property="dwevalBegin" jdbcType="VARCHAR" />
+    <result column="DWEVAL_END" property="dwevalEnd" jdbcType="VARCHAR" />
+    <result column="QUORUM" property="quorum" jdbcType="INTEGER" />
+    <result column="REAL_NUM" property="realNum" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CODE, NAME, CYCLE_TYPE, USER_TYPE, EVAL_TYPE, score, SCORE_MAX, BEGIN_DATE, END_DATE,
+    EVENT_BEGIN, EVENT_END, GRZP_BEGIN, GRZP_END, KSEVAL_BEGIN, KSEVAL_END, DKEVAL_BEGIN,
+    DKEVAL_END, DWEVAL_BEGIN, DWEVAL_END, QUORUM, REAL_NUM, STATUS, REMARK, ADD_TIME,
+    UPDATE_TIME, CREATER, MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalZqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_zq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_eval_zq
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_zq
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalZqExample" >
+    delete from tbl_eval_zq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalZq" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_zq (ID, CODE, NAME,
+    CYCLE_TYPE, USER_TYPE, EVAL_TYPE,
+    score, SCORE_MAX, BEGIN_DATE,
+    END_DATE, EVENT_BEGIN, EVENT_END,
+    GRZP_BEGIN, GRZP_END, KSEVAL_BEGIN,
+    KSEVAL_END, DKEVAL_BEGIN, DKEVAL_END,
+    DWEVAL_BEGIN, DWEVAL_END, QUORUM,
+    REAL_NUM, STATUS, REMARK,
+    ADD_TIME, UPDATE_TIME, CREATER,
+    MENDER)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{cycleType,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{evalType,jdbcType=VARCHAR},
+    #{score,jdbcType=DECIMAL}, #{scoreMax,jdbcType=VARCHAR}, #{beginDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR}, #{eventBegin,jdbcType=VARCHAR}, #{eventEnd,jdbcType=VARCHAR},
+    #{grzpBegin,jdbcType=VARCHAR}, #{grzpEnd,jdbcType=VARCHAR}, #{ksevalBegin,jdbcType=VARCHAR},
+    #{ksevalEnd,jdbcType=VARCHAR}, #{dkevalBegin,jdbcType=VARCHAR}, #{dkevalEnd,jdbcType=VARCHAR},
+    #{dwevalBegin,jdbcType=VARCHAR}, #{dwevalEnd,jdbcType=VARCHAR}, #{quorum,jdbcType=INTEGER},
+    #{realNum,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT},
+    #{mender,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalZq" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_zq
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="cycleType != null" >
+        CYCLE_TYPE,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="evalType != null" >
+        EVAL_TYPE,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="scoreMax != null" >
+        SCORE_MAX,
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="eventBegin != null" >
+        EVENT_BEGIN,
+      </if>
+      <if test="eventEnd != null" >
+        EVENT_END,
+      </if>
+      <if test="grzpBegin != null" >
+        GRZP_BEGIN,
+      </if>
+      <if test="grzpEnd != null" >
+        GRZP_END,
+      </if>
+      <if test="ksevalBegin != null" >
+        KSEVAL_BEGIN,
+      </if>
+      <if test="ksevalEnd != null" >
+        KSEVAL_END,
+      </if>
+      <if test="dkevalBegin != null" >
+        DKEVAL_BEGIN,
+      </if>
+      <if test="dkevalEnd != null" >
+        DKEVAL_END,
+      </if>
+      <if test="dwevalBegin != null" >
+        DWEVAL_BEGIN,
+      </if>
+      <if test="dwevalEnd != null" >
+        DWEVAL_END,
+      </if>
+      <if test="quorum != null" >
+        QUORUM,
+      </if>
+      <if test="realNum != null" >
+        REAL_NUM,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleType != null" >
+        #{cycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="evalType != null" >
+        #{evalType,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreMax != null" >
+        #{scoreMax,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="eventBegin != null" >
+        #{eventBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="eventEnd != null" >
+        #{eventEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="grzpBegin != null" >
+        #{grzpBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="grzpEnd != null" >
+        #{grzpEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="ksevalBegin != null" >
+        #{ksevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="ksevalEnd != null" >
+        #{ksevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dkevalBegin != null" >
+        #{dkevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="dkevalEnd != null" >
+        #{dkevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dwevalBegin != null" >
+        #{dwevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="dwevalEnd != null" >
+        #{dwevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="quorum != null" >
+        #{quorum,jdbcType=INTEGER},
+      </if>
+      <if test="realNum != null" >
+        #{realNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalZqExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_zq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_zq
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleType != null" >
+        CYCLE_TYPE = #{record.cycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalType != null" >
+        EVAL_TYPE = #{record.evalType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scoreMax != null" >
+        SCORE_MAX = #{record.scoreMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginDate != null" >
+        BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endDate != null" >
+        END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventBegin != null" >
+        EVENT_BEGIN = #{record.eventBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventEnd != null" >
+        EVENT_END = #{record.eventEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grzpBegin != null" >
+        GRZP_BEGIN = #{record.grzpBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grzpEnd != null" >
+        GRZP_END = #{record.grzpEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksevalBegin != null" >
+        KSEVAL_BEGIN = #{record.ksevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksevalEnd != null" >
+        KSEVAL_END = #{record.ksevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkevalBegin != null" >
+        DKEVAL_BEGIN = #{record.dkevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkevalEnd != null" >
+        DKEVAL_END = #{record.dkevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwevalBegin != null" >
+        DWEVAL_BEGIN = #{record.dwevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwevalEnd != null" >
+        DWEVAL_END = #{record.dwevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quorum != null" >
+        QUORUM = #{record.quorum,jdbcType=INTEGER},
+      </if>
+      <if test="record.realNum != null" >
+        REAL_NUM = #{record.realNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null" >
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_zq
+    set ID = #{record.id,jdbcType=BIGINT},
+    CODE = #{record.code,jdbcType=VARCHAR},
+    NAME = #{record.name,jdbcType=VARCHAR},
+    CYCLE_TYPE = #{record.cycleType,jdbcType=VARCHAR},
+    USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+    EVAL_TYPE = #{record.evalType,jdbcType=VARCHAR},
+    score = #{record.score,jdbcType=DECIMAL},
+    SCORE_MAX = #{record.scoreMax,jdbcType=VARCHAR},
+    BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
+    END_DATE = #{record.endDate,jdbcType=VARCHAR},
+    EVENT_BEGIN = #{record.eventBegin,jdbcType=VARCHAR},
+    EVENT_END = #{record.eventEnd,jdbcType=VARCHAR},
+    GRZP_BEGIN = #{record.grzpBegin,jdbcType=VARCHAR},
+    GRZP_END = #{record.grzpEnd,jdbcType=VARCHAR},
+    KSEVAL_BEGIN = #{record.ksevalBegin,jdbcType=VARCHAR},
+    KSEVAL_END = #{record.ksevalEnd,jdbcType=VARCHAR},
+    DKEVAL_BEGIN = #{record.dkevalBegin,jdbcType=VARCHAR},
+    DKEVAL_END = #{record.dkevalEnd,jdbcType=VARCHAR},
+    DWEVAL_BEGIN = #{record.dwevalBegin,jdbcType=VARCHAR},
+    DWEVAL_END = #{record.dwevalEnd,jdbcType=VARCHAR},
+    QUORUM = #{record.quorum,jdbcType=INTEGER},
+    REAL_NUM = #{record.realNum,jdbcType=INTEGER},
+    STATUS = #{record.status,jdbcType=VARCHAR},
+    REMARK = #{record.remark,jdbcType=VARCHAR},
+    ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+    UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+    CREATER = #{record.creater,jdbcType=BIGINT},
+    MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalZq" >
+    update tbl_eval_zq
+    <set >
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleType != null" >
+        CYCLE_TYPE = #{cycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="evalType != null" >
+        EVAL_TYPE = #{evalType,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreMax != null" >
+        SCORE_MAX = #{scoreMax,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="eventBegin != null" >
+        EVENT_BEGIN = #{eventBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="eventEnd != null" >
+        EVENT_END = #{eventEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="grzpBegin != null" >
+        GRZP_BEGIN = #{grzpBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="grzpEnd != null" >
+        GRZP_END = #{grzpEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="ksevalBegin != null" >
+        KSEVAL_BEGIN = #{ksevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="ksevalEnd != null" >
+        KSEVAL_END = #{ksevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dkevalBegin != null" >
+        DKEVAL_BEGIN = #{dkevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="dkevalEnd != null" >
+        DKEVAL_END = #{dkevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dwevalBegin != null" >
+        DWEVAL_BEGIN = #{dwevalBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="dwevalEnd != null" >
+        DWEVAL_END = #{dwevalEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="quorum != null" >
+        QUORUM = #{quorum,jdbcType=INTEGER},
+      </if>
+      <if test="realNum != null" >
+        REAL_NUM = #{realNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalZq" >
+    update tbl_eval_zq
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      CYCLE_TYPE = #{cycleType,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      EVAL_TYPE = #{evalType,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      SCORE_MAX = #{scoreMax,jdbcType=VARCHAR},
+      BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      EVENT_BEGIN = #{eventBegin,jdbcType=VARCHAR},
+      EVENT_END = #{eventEnd,jdbcType=VARCHAR},
+      GRZP_BEGIN = #{grzpBegin,jdbcType=VARCHAR},
+      GRZP_END = #{grzpEnd,jdbcType=VARCHAR},
+      KSEVAL_BEGIN = #{ksevalBegin,jdbcType=VARCHAR},
+      KSEVAL_END = #{ksevalEnd,jdbcType=VARCHAR},
+      DKEVAL_BEGIN = #{dkevalBegin,jdbcType=VARCHAR},
+      DKEVAL_END = #{dkevalEnd,jdbcType=VARCHAR},
+      DWEVAL_BEGIN = #{dwevalBegin,jdbcType=VARCHAR},
+      DWEVAL_END = #{dwevalEnd,jdbcType=VARCHAR},
+      QUORUM = #{quorum,jdbcType=INTEGER},
+      REAL_NUM = #{realNum,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=BIGINT},
+      MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findRowNo" parameterType="EvalZqQuery" resultType="Integer">
+    SELECT TT.rownum FROM (
+    SELECT @rownum:=@rownum+1 rownum, id FROM
+    (SELECT @rownum:=0,u.id FROM tbl_eval_Zq U WHERE 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null and status !=''">
+        AND U.status = #{status}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY U.code,U.id
+      </if>
+      ) XXX_T
+      ) TT WHERE 1=1
+      <if test="id != null and id !=''">
+        and  TT.id=#{id}
+      </if>
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      limit 1
+    </trim>
+  </select>
+
+  <select id="findListNum" parameterType="EvalZqQuery" resultType="Integer">
+    select count(1) num from tbl_eval_Zq U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null and status !=''">
+        AND U.status = #{status}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.CODE,U.name,U.id
+      </if>
+    </trim>
+  </select>
+
+  <select id="findList" parameterType="EvalZqQuery" resultMap="BaseResultMap">
+    select U.* from tbl_eval_Zq U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null and status !=''">
+        AND U.status = #{status}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.CODE,U.name,U.id
+      </if>
+      <if test="pageSize != null and pageSize !='' ">
+        <if test="startRow != null">
+          limit ${startRow}, ${pageSize}
+        </if>
+        <if test="startRow == null">
+          limit ${pageSize}
+        </if>
+      </if>
+    </trim>
+  </select>
+  
+</mapper>

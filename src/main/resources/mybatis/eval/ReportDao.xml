@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.water.ciro.eval.mapper.EvalReportDao">
+    <resultMap id="userInfoResult" type="cc.water.ciro.eval.reportBean.EvalReportUserInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="ksId" property="ksId" jdbcType="BIGINT"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="ksName" property="ksName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!-- 根据等级查询数据 -->
+    <select id="getReportUserInfo" resultMap="userInfoResult" parameterType="hashMap">
+SELECT t.id,t.user_id userId,t.ks ksId,P.NAME userName,D.NAME ksName
+FROM tbl_eval_base_info T
+LEFT JOIN sys_user P ON P.id = T.user_id
+LEFT JOIN SYS_DEPT D ON D.ID = P.DEPT_ID
+WHERE  T.STATUS = #{status} AND T.EVAL_LV = #{levelId}
+AND T.period_id=#{periodId} ORDER BY D.CODE,D.ID,P.NAME,P.ID
+    </select>
+
+
+    <resultMap id="reportDwPieResult" type="cc.water.ciro.eval.reportBean.EvalReportDwPie">
+        <result column="lvName" property="lvName" jdbcType="VARCHAR"/>
+        <result column="lvNum" property="lvNum" javaType="int" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getReportDwPie" resultMap="reportDwPieResult" parameterType="EvalReportDwQuery">
+        SELECT lv.name lvName,COUNT(1) lvNum FROM tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN tbl_eval_level lv ON lv.id = T.eval_lv
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        WHERE lv.name IS NOT NULL AND t.status= #{status}
+        <if test="periodId != null and  periodId!= ''">
+            and t.period_id = #{periodId}
+        </if>
+        <if test="userTypeId != null and  userTypeId!= ''">
+            and P.eval_type = #{userTypeId}
+        </if>
+        GROUP BY lv.name
+        ORDER BY lv.name
+    </select>
+
+    <select id="getReportDwPieCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        select count(1) num from (
+        SELECT lv.name lvName,COUNT(1) lvNum FROM tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN tbl_eval_level lv ON lv.id = T.eval_lv
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        WHERE lv.name IS NOT NULL AND t.status= #{status}
+        <if test="periodId != null and  periodId!= ''">
+            and t.period_id = #{periodId}
+        </if>
+        <if test="userTypeId != null and  userTypeId!= ''">
+            and P.eval_type = #{userTypeId}
+        </if>
+        GROUP BY lv.name
+        )a
+    </select>
+
+    <resultMap id="reportDwResult" type="cc.water.ciro.eval.reportBean.EvalReportDw">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="deptName" property="deptName" jdbcType="VARCHAR"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="zpName1" property="zpName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName2" property="zpName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName3" property="zpName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName4" property="zpName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName1" property="kName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName2" property="kName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName3" property="kName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName4" property="kName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName1" property="dkName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName2" property="dkName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName3" property="dkName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName4" property="dkName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName1" property="dwName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName2" property="dwName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName3" property="dwName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName4" property="dwName4" javaType="int" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getReportDw" resultMap="reportDwResult" parameterType="EvalReportDwQuery">
+        select zq.id periodId,zq.name periodName,d.id,d.name deptName,
+        sum(if(ZPBZ.name='优秀',1,0)) ZPNAME1,
+        sum(if(ZPBZ.name='良好',1,0)) ZPNAME2,
+        sum(if(ZPBZ.name='一般',1,0)) ZPNAME3,
+        sum(if(ZPBZ.name='较差',1,0)) ZPNAME4,
+        sum(if(K.name='优秀',1,0)) KNAME1,
+        sum(if(K.name='良好',1,0)) KNAME2,
+        sum(if(K.name='一般',1,0)) KNAME3,
+        sum(if(K.name='较差',1,0)) KNAME4,
+        sum(if(DK.name='优秀',1,0)) DKNAME1,
+        sum(if(DK.name='良好',1,0)) DKNAME2,
+        sum(if(DK.name='一般',1,0)) DKNAME3,
+        sum(if(DK.name='较差',1,0)) DKNAME4,
+        sum(if(DW.name='优秀',1,0)) DWNAME1,
+        sum(if(DW.name='良好',1,0)) DWNAME2,
+        sum(if(DW.name='一般',1,0)) DWNAME3,
+        sum(if(DW.name='较差',1,0)) DWNAME4
+        from tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN tbl_eval_level ZPBZ ON ZPBZ.id = T.SELF_LV
+        LEFT JOIN tbl_eval_level DK ON DK.id = T.DK_LV
+        LEFT JOIN tbl_eval_level K ON K.id = T.KS_LV
+        LEFT JOIN tbl_eval_level DW ON DW.id = T.CORP_LV
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        <where>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+        group by zq.id,zq.name,d.id,d.name
+        ORDER BY zq.id,d.code,d.id
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportDwCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        select count(1) num from
+        (select 1
+        from tbl_eval_base_info T
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        <where>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+        GROUP BY d.name,d.id)a
+
+    </select>
+
+
+    <resultMap id="reportKsResult" type="cc.water.ciro.eval.reportBean.EvalReportKs">
+        <id column="deptId" property="deptId" jdbcType="BIGINT"/>
+        <id column="userTypeId" property="userTypeId" jdbcType="BIGINT"/>
+        <result column="userTypeName" property="userTypeName" jdbcType="VARCHAR"/>
+        <result column="deptName" property="deptName" jdbcType="VARCHAR"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="zpName1" property="zpName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName2" property="zpName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName3" property="zpName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="zpName4" property="zpName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName1" property="kName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName2" property="kName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName3" property="kName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="kName4" property="kName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName1" property="dkName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName2" property="dkName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName3" property="dkName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkName4" property="dkName4" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName1" property="dwName1" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName2" property="dwName2" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName3" property="dwName3" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwName4" property="dwName4" javaType="int" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getReportKs" resultMap="reportKsResult" parameterType="EvalReportDwQuery">
+        select zq.id periodId,zq.name periodName,d.id deptId,d.name deptName,tp.id userTypeId, tp.type_name
+        userTypeName,
+        sum(if(ZPBZ.name='优秀',1,0)) ZPNAME1,
+        sum(if(ZPBZ.name='良好',1,0)) ZPNAME2,
+        sum(if(ZPBZ.name='一般',1,0)) ZPNAME3,
+        sum(if(ZPBZ.name='较差',1,0)) ZPNAME4,
+        sum(if(K.name='优秀',1,0)) KNAME1,
+        sum(if(K.name='良好',1,0)) KNAME2,
+        sum(if(K.name='一般',1,0)) KNAME3,
+        sum(if(K.name='较差',1,0)) KNAME4,
+        sum(if(DK.name='优秀',1,0)) DKNAME1,
+        sum(if(DK.name='良好',1,0)) DKNAME2,
+        sum(if(DK.name='一般',1,0)) DKNAME3,
+        sum(if(DK.name='较差',1,0)) DKNAME4,
+        sum(if(DW.name='优秀',1,0)) DWNAME1,
+        sum(if(DW.name='良好',1,0)) DWNAME2,
+        sum(if(DW.name='一般',1,0)) DWNAME3,
+        sum(if(DW.name='较差',1,0)) DWNAME4
+        from tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN tbl_eval_level ZPBZ ON ZPBZ.id = T.SELF_LV
+        LEFT JOIN tbl_eval_level DK ON DK.id = T.DK_LV
+        LEFT JOIN tbl_eval_level K ON K.id = T.KS_LV
+        LEFT JOIN tbl_eval_level DW ON DW.id = T.CORP_LV
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+        group by zq.id,zq.name,d.id,d.name,tp.id, tp.type_name
+        ORDER BY zq.id,d.code,d.id
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportKsCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        select count(1) num from
+        (select 1
+        from tbl_eval_base_info T
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+        GROUP BY d.name,d.id)a
+
+    </select>
+
+    <resultMap id="reportUserResult" type="cc.water.ciro.eval.reportBean.EvalReportUser">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="deptId" property="deptId" jdbcType="BIGINT"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="userTypeId" property="userTypeId" jdbcType="BIGINT"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="deptName" property="deptName" jdbcType="VARCHAR"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="userTypeName" property="userTypeName" jdbcType="VARCHAR"/>
+        <result column="nl" property="nl" javaType="int" jdbcType="INTEGER"/>
+        <result column="zc" property="zc" jdbcType="VARCHAR"/>
+        <result column="selfLv" property="selfLv" jdbcType="VARCHAR"/>
+        <result column="selfScore" property="selfScore" jdbcType="DECIMAL"/>
+        <result column="ksLv" property="ksLv" jdbcType="VARCHAR"/>
+        <result column="ksScore" property="ksScore" jdbcType="DECIMAL"/>
+        <result column="dkLv" property="dkLv" jdbcType="VARCHAR"/>
+        <result column="dkScore" property="dkScore" jdbcType="DECIMAL"/>
+        <result column="corpLv" property="corpLv" jdbcType="VARCHAR"/>
+        <result column="corpScore" property="corpScore" jdbcType="DECIMAL"/>
+        <result column="evalLv" property="evalLv" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="DECIMAL"/>
+    </resultMap>
+
+
+    <select id="getReportUser" resultMap="reportUserResult" parameterType="EvalReportDwQuery">
+        SELECT T.id,P.id userId,p.name userName,d.id deptId,d.name deptName,tp.id userTypeId, tp.type_name
+        userTypeName,t.zc,t.nl,
+        ZPBZ.name selfLv,t.self_score selfScore,K.name ksLv,t.ks_score ksScore,dk.name dkLv,t.dk_score dkScore,
+        dw.name corpLv,t.corp_score corpScore,SD.NAME evalLv, t.score,zq.id periodId,zq.name periodName
+        FROM tbl_eval_base_info T
+        LEFT JOIN tbl_eval_level ZPBZ ON ZPBZ.id = T.SELF_LV
+        LEFT JOIN tbl_eval_level DK ON DK.id = T.DK_LV
+        LEFT JOIN tbl_eval_level K ON K.id = T.KS_LV
+        LEFT JOIN tbl_eval_level DW ON DW.id = T.CORP_LV
+        LEFT JOIN tbl_eval_level SD ON SD.id = T.eval_lv
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+        ORDER BY d.code,d.id
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportUserCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        SELECT count(1) num
+        FROM tbl_eval_base_info T
+        LEFT JOIN tbl_eval_level ZPBZ ON ZPBZ.id = T.SELF_LV
+        LEFT JOIN tbl_eval_level DK ON DK.id = T.DK_LV
+        LEFT JOIN tbl_eval_level K ON K.id = T.KS_LV
+        LEFT JOIN tbl_eval_level DW ON DW.id = T.CORP_LV
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+            <if test="userTypeId != null and  userTypeId!= ''">
+                and P.eval_type = #{userTypeId}
+            </if>
+            <if test="zc != null and  zc!= ''">
+                and t.zc = #{zc}
+            </if>
+            <if test="nlStart != null and  nlStart!= ''">
+                and t.nl >= #{nlStart}
+            </if>
+            <if test="nlEnd != null and  nlEnd!= ''">
+                <![CDATA[ and t.nl<= #{nlEnd} ]]>
+            </if>
+            <if test="sex != null and  sex!= ''">
+                and t.sex = #{sex}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="reportDwDataResult" type="cc.water.ciro.eval.reportBean.EvalReportDwData">
+        <result column="deptId" property="deptId" jdbcType="BIGINT"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="userTypeId" property="userTypeId" jdbcType="BIGINT"/>
+        <result column="parentId" property="parentId" jdbcType="BIGINT"/>
+        <result column="levelCode" property="levelCode" jdbcType="VARCHAR"/>
+        <result column="deptName" property="deptName" jdbcType="VARCHAR"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="userTypeName" property="userTypeName" jdbcType="VARCHAR"/>
+        <result column="allNum" property="allNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="selfYesNum" property="selfYesNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="selfNoNum" property="selfNoNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="ksYesNum" property="ksYesNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="ksNoNum" property="ksNoNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkYesNum" property="dkYesNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="dkNoNum" property="dkNoNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwYesNum" property="dwYesNum" javaType="int" jdbcType="INTEGER"/>
+        <result column="dwNoNum" property="dwNoNum" javaType="int" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getReportDwData" resultMap="reportDwDataResult" parameterType="EvalReportDwQuery">
+        <![CDATA[ SELECT periodId,periodName,userTypeId,userTypeName,deptId,parentId,levelCode,deptName,allNum,
+        selfYesNum,CASE WHEN allNum-selfYesNum<0 THEN 0 ELSE allNum-selfYesNum END  selfNoNum
+        ,ksYesNum,CASE WHEN allNum-ksYesNum<0 THEN 0 ELSE allNum-ksYesNum END  ksNoNum
+        ,dkYesNum,CASE WHEN allNum-dkYesNum<0 THEN 0 ELSE allNum-dkYesNum END dkNoNum
+        ,dwYesNum,CASE WHEN allNum-dwYesNum<0 THEN 0 ELSE allNum-dwYesNum END dwNoNum FROM (
+        SELECT zq.id periodId,zq.name periodName,tp.id userTypeId,tp.type_name userTypeName,d.id deptId,
+        d.parent_id parentId,d.level_code levelCode,d.name deptName
+        ,(SELECT COUNT(*) FROM SYS_user P, tbl_eval_zq ZQ
+        WHERE p.to_eval='YES'
+        AND ZQ.ID=T.period_id AND p.eval_type = tp.id and t.ks = p.eval_dept
+        ) allNum
+        ,SUM(CASE WHEN T.STATUS<#{selfSubmit} THEN 0 ELSE 1 END) selfYesNum
+        ,SUM(CASE WHEN T.STATUS<#{ksSubmit} THEN 0 ELSE 1 END) ksYesNum
+        ,SUM(CASE WHEN T.STATUS<#{dkSubmit} THEN 0 ELSE 1 END) dkYesNum
+        ,SUM(CASE WHEN T.STATUS<#{dwSubmit} THEN 0 ELSE 1 END) dwYesNum
+        FROM  tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+          ]]>
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+        </where>
+        GROUP BY zq.id,zq.name,tp.id,tp.type_name,d.id,d.parent_id,d.level_code,d.name
+        ORDER BY zq.id,zq.name,tp.id,tp.type_name,d.level_code,d.id
+        )g
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportDwDataCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        <![CDATA[  SELECT count(1) FROM (
+        SELECT zq.id periodId,zq.name periodName,tp.id userTypeId,tp.type_name userTypeName,d.id deptId,
+        d.parent_id parentId,d.level_code levelCode,d.name deptName
+        ,(SELECT COUNT(*) FROM SYS_user P, tbl_eval_zq ZQ
+        WHERE p.to_eval='YES'
+        AND ZQ.ID=T.period_id AND p.eval_type = tp.id and t.ks = p.eval_dept
+        ) allNum
+        ,SUM(CASE WHEN T.STATUS<#{selfSubmit} THEN 0 ELSE 1 END) selfYesNum
+        ,SUM(CASE WHEN T.STATUS<#{ksSubmit} THEN 0 ELSE 1 END) ksYesNum
+        ,SUM(CASE WHEN T.STATUS<#{dkSubmit} THEN 0 ELSE 1 END) dkYesNum
+        ,SUM(CASE WHEN T.STATUS<#{dwSubmit} THEN 0 ELSE 1 END) dwYesNum
+        FROM  tbl_eval_base_info T
+        LEFT JOIN tbl_eval_zq zq ON zq.id =T.period_id
+        LEFT JOIN SYS_user P ON P.id =T.USER_ID
+        LEFT JOIN tbl_eval_user_type tp ON tp.id =p.eval_type
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+          ]]>
+        <where>
+            <if test="ksList != null ">
+                AND D.id in
+                <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                    #{i_id}
+                </foreach>
+            </if>
+            <if test="ksId != null and  ksId!= ''">
+                and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+            </if>
+            <if test="periodId != null and  periodId!= ''">
+                and t.period_id = #{periodId}
+            </if>
+        </where>
+        GROUP BY zq.id,zq.name,tp.id,tp.type_name,d.id,d.parent_id,d.level_code,d.name
+        )g
+    </select>
+
+
+    <resultMap id="reportUserDataResult" type="cc.water.ciro.eval.reportBean.EvalReportUserData">
+        <result column="deptId" property="deptId" jdbcType="BIGINT"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="deptName" property="deptName" jdbcType="VARCHAR"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="zc" property="zc" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getReportUserData" resultMap="reportUserDataResult" parameterType="EvalReportDwQuery">
+        SELECT P.ID userId,p.NAME userName,D.id deptId,D.NAME deptName
+        ,T.zc,t.nl,CASE WHEN P.SEX=1 THEN '男' ELSE '女' END sex
+        ,P.MOBILE,P.EMAIL
+        FROM tbl_eval_base_info T
+        LEFT JOIN sys_user P ON P.ID =T.user_id
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        WHERE p.to_eval='YES'
+        <if test="ksList != null ">
+            AND D.id in
+            <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                #{i_id}
+            </foreach>
+        </if>
+        <if test="ksId != null and  ksId!= ''">
+            and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+        </if>
+        <if test="periodId != null and  periodId!= ''">
+            and t.period_id = #{periodId}
+        </if>
+        <if test="status != null and  status!= ''">
+            and t.status >= #{status}
+        </if>
+        <if test="userName != null and  userName!= ''">
+            and p.name like concat('%',#{userName},'%')
+        </if>
+
+        ORDER BY t.period_id,d.level_code,d.id
+
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportUserDataCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        SELECT count(1) num
+        FROM tbl_eval_base_info T
+        LEFT JOIN sys_user P ON P.ID =T.user_id
+        LEFT JOIN SYS_DEPT D ON D.ID = T.KS
+        WHERE p.to_eval='YES'
+        <if test="ksList != null ">
+            AND D.id in
+            <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                #{i_id}
+            </foreach>
+        </if>
+        <if test="ksId != null and  ksId!= ''">
+            and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+        </if>
+        <if test="periodId != null and  periodId!= ''">
+            and t.period_id = #{periodId}
+        </if>
+        <if test="status != null and  status!= ''">
+            and t.status >= #{status}
+        </if>
+        <if test="userName != null and  userName!= ''">
+            and p.name like concat('%',#{userName},'%')
+        </if>
+    </select>
+
+
+    <select id="getReportUserDataW" resultMap="reportUserDataResult" parameterType="EvalReportDwQuery">
+        SELECT P.ID userId,p.NAME userName,D.id deptId,D.NAME deptName
+        ,p.postName zc,CASE WHEN P.SEX=1 THEN '男' ELSE '女' END sex
+        ,P.MOBILE,P.EMAIL
+        FROM sys_user p
+        LEFT JOIN tbl_eval_zq zq ON CONCAT(',',zq.user_type,',') LIKE CONCAT('%,',p.eval_type,',%')
+        LEFT JOIN tbl_eval_base_info T ON P.ID =T.user_id AND T.period_id = zq.id
+        LEFT JOIN SYS_DEPT D ON D.ID = p.eval_dept
+        WHERE p.to_eval='YES'
+        AND NOT EXISTS(SELECT 1 FROM tbl_eval_base_info T
+        WHERE P.ID =T.user_id AND T.period_id = zq.id
+        <if test="ksList != null ">
+            AND D.id in
+            <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                #{i_id}
+            </foreach>
+        </if>
+        <if test="status != null and  status!= ''">
+            <![CDATA[   and t.status >= #{status}   ]]>
+        </if>
+        )
+        <if test="ksId != null and  ksId!= ''">
+            and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+        </if>
+        <if test="periodId != null and  periodId!= ''">
+            and zq.id = #{periodId}
+        </if>
+
+        <if test="userName != null and  userName!= ''">
+            and p.name like concat('%',#{userName},'%')
+        </if>
+        ORDER BY zq.id,zq.name,d.level_code,d.id
+
+        <if test="pageSize != null and pageSize !='' ">
+            <if test="startRow != null">
+                limit ${startRow}, ${pageSize}
+            </if>
+            <if test="startRow == null">
+                limit ${pageSize}
+            </if>
+        </if>
+    </select>
+    <select id="getReportUserDataWCount" parameterType="EvalReportDwQuery" resultType="Integer">
+        SELECT count(1) num
+        FROM sys_user p
+        LEFT JOIN tbl_eval_zq zq ON CONCAT(',',zq.user_type,',') LIKE CONCAT('%,',p.eval_type,',%')
+        LEFT JOIN tbl_eval_base_info T ON P.ID =T.user_id AND T.period_id = zq.id
+        LEFT JOIN SYS_DEPT D ON D.ID = p.eval_dept
+        WHERE p.to_eval='YES'
+        AND NOT EXISTS(SELECT 1 FROM tbl_eval_base_info T
+        WHERE P.ID =T.user_id AND T.period_id = zq.id
+        <if test="ksList != null ">
+            AND D.id in
+            <foreach collection="ksList" item="i_id" index="i_num" open="(" separator="," close=")">
+                #{i_id}
+            </foreach>
+        </if>
+        <if test="status != null and  status!= ''">
+            <![CDATA[   and t.status >= #{status}   ]]>
+        </if>
+        )
+        <if test="ksId != null and  ksId!= ''">
+            and concat('-',d.level_code,'-') like concat('%-',#{ksId},'-%')
+        </if>
+        <if test="periodId != null and  periodId!= ''">
+            and zq.id = #{periodId}
+        </if>
+        <if test="userName != null and  userName!= ''">
+            and p.name like concat('%',#{userName},'%')
+        </if>
+
+    </select>
+
+
+    <resultMap id="portalSelfResult" type="cc.water.ciro.eval.reportBean.EvalReportUser">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="periodId" property="periodId" jdbcType="BIGINT"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getPortalSelf" resultMap="portalSelfResult" parameterType="EvalReportDwQuery">
+        SELECT u.id,u.id userId,zq.id periodId,u.name userName,zq.name periodName FROM sys_user u
+        LEFT JOIN tbl_eval_zq zq ON INSTR(CONCAT(',',zq.USER_TYPE,','),CONCAT(',',u.eval_type,','))>0
+        WHERE u.to_eval='YES' and zq.status!='END'
+        AND NOT EXISTS(SELECT 1 FROM tbl_eval_base_info t WHERE t.user_id=u.id AND t.period_id=zq.id)
+        AND u.id=#{userId}
+    </select>
+
+
+</mapper>

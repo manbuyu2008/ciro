@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.water.ciro.system.dao.PermissionDao">
+    <resultMap id="permissionResult" type="Permission">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <result column="type" property="type"></result>
+        <result column="url" property="url"></result>
+        <result column="percode" property="percode"></result>
+        <result column="parentid" property="parentid"></result>
+        <result column="parentids" property="parentids"></result>
+        <result column="sortstring" property="sortstring"></result>
+        <result column="available" property="available"></result>
+        <result column="menu_icon" property="menuIcon"></result>
+        <result column="create_date" property="createDate"></result>
+        <result column="update_date" property="updateDate"></result>
+        <result column="creater" property="creater"></result>
+        <result column="mender" property="mender"></result>
+    </resultMap>
+
+    <sql id="permissionCloumn">
+	 id,name,type,url,percode,parentid,parentids,sortstring,available,menu_icon,create_date,update_date,creater,mender
+	</sql>
+
+    <!-- 根据主键查询数据 -->
+    <select id="selectPermissionByKey" resultMap="permissionResult" parameterType="hashMap">
+        select
+        <include refid="permissionCloumn"/>
+        from sys_permission where id=#{id}
+    </select>
+
+    <!-- 根据主键查询数据 -->
+    <select id="selectPermissionByName" resultMap="permissionResult" parameterType="hashMap">
+        select
+        <include refid="permissionCloumn"/>
+        from sys_permission where name=#{name}
+    </select>
+    <!-- 根据主键批量查询 -->
+    <select id="selectPermissionByKeys" resultMap="permissionResult" parameterType="ArrayList">
+        select
+        <include refid="permissionCloumn"/>
+        from sys_permission where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+    <!-- 根据主键删除数据 -->
+    <delete id="deletePermissionByKey" parameterType="hashMap">
+		delete from sys_permission where id=#{id}
+    </delete>
+
+    <!-- 根据主键批量删除数据 -->
+    <delete id="deletePermissionByKeys">
+        delete from sys_permission where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updatePermissionByKey" parameterType="Permission">
+        update sys_permission
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name!=null">
+                    name=#{name},
+                </if>
+                <if test="type!=null">
+                    type=#{type},
+                </if>
+                <if test="url!=null">
+                    url=#{url},
+                </if>
+                <if test="percode!=null">
+                    percode=#{percode},
+                </if>
+                <if test="parentid!=null">
+                    parentid=#{parentid},
+                </if>
+                <if test="parentids!=null">
+                    parentids=#{parentids},
+                </if>
+                <if test="sortstring!=null">
+                    sortstring=#{sortstring},
+                </if>
+                <if test="available!=null">
+                    available=#{available},
+                </if>
+                <if test="menuIcon!=null">
+                    menu_icon=#{menuIcon},
+                </if>
+                <if test="createDate!=null">
+                    create_date=#{createDate},
+                </if>
+                <if test="updateDate!=null">
+                    update_date=#{updateDate},
+                </if>
+                <if test="creater!=null">
+                    creater=#{creater},
+                </if>
+                <if test="mender!=null">
+                    mender=#{mender}
+                </if>
+            </trim>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- 添加数据 -->
+    <insert id="insertPermission" parameterType="Permission" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="type!=null">
+                type,
+            </if>
+            <if test="url!=null">
+                url,
+            </if>
+            <if test="percode!=null">
+                percode,
+            </if>
+            <if test="parentid!=null">
+                parentid,
+            </if>
+            <if test="parentids!=null">
+                parentids,
+            </if>
+            <if test="sortstring!=null">
+                sortstring,
+            </if>
+            <if test="available!=null">
+                available,
+            </if>
+            <if test="menuIcon!=null">
+                menu_icon,
+            </if>
+            <if test="createDate!=null">
+                create_date,
+            </if>
+            <if test="updateDate!=null">
+                update_date,
+            </if>
+            <if test="creater!=null">
+                creater,
+            </if>
+            <if test="mender!=null">
+                mender
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="url!=null">
+                #{url},
+            </if>
+            <if test="percode!=null">
+                #{percode},
+            </if>
+            <if test="parentid!=null">
+                #{parentid},
+            </if>
+            <if test="parentids!=null">
+                #{parentids},
+            </if>
+            <if test="sortstring!=null">
+                #{sortstring},
+            </if>
+            <if test="available!=null">
+                #{available},
+            </if>
+            <if test="createDate!=null">
+                #{createDate},
+            </if>
+            <if test="updateDate!=null">
+                #{updateDate},
+            </if>
+            <if test="creater!=null">
+                #{creater},
+            </if>
+            <if test="mender!=null">
+                #{mender}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 分页查询 -->
+    <select id="selectPermissionListWithPage" resultMap="permissionResult" parameterType="PermissionQuery">
+        select
+        <include refid="permissionCloumn"></include>
+        from sys_permission order by parentid,sortstring ,id
+        <if test="startRow != null">
+            limit #{startRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getPermissionListCount" resultType="int">
+		SELECT count(1) FROM sys_permission
+	</select>
+
+    <select id="selectAllPermission" resultMap="permissionResult">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission order by parentid,sortstring ,id
+    </select>
+
+    <select id="selectPermissionByRoleId" resultMap="permissionResult" parameterType="hashMap">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission WHERE id in(SELECT A.sys_permission_id FROM sys_role_permission A WHERE A.sys_role_id=#{roleId}
+        <trim suffixOverrides="AND | OR">
+            <if test="status != null and status !='' ">
+                AND A.status=#{status}
+            </if>
+        </trim>
+        )
+    </select>
+
+    <select id="selectPermissionByMenu" resultMap="permissionResult">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission WHERE type='menu' order by parentid,sortstring ,id
+    </select>
+
+    <select id="selectPermissionByParentid" resultMap="permissionResult" parameterType="hashMap">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission WHERE parentid=#{parentid} order by parentid,sortstring ,id
+    </select>
+    <!-- 根据用户id获取用户菜单权限 -->
+    <select id="selectPermissionMenuByUserId" resultMap="permissionResult" parameterType="hashMap">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission
+        WHERE type='menu' AND parentid=1 AND id IN
+        (SELECT sys_permission_id FROM sys_role_permission WHERE sys_role_id IN
+        (SELECT sys_role_id FROM sys_user_role WHERE sys_user_id = #{userid})
+        ) order by parentid,sortstring ,id
+    </select>
+
+    <!-- 根据用户id获取用户权限操作 -->
+    <select id="selectPermissionByUserId" resultMap="permissionResult" parameterType="hashMap">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission
+        WHERE type='permission' AND id IN
+        (SELECT sys_permission_id FROM sys_role_permission WHERE sys_role_id IN
+        (SELECT sys_role_id FROM sys_user_role WHERE sys_user_id = #{userid})
+        ) order by parentid,sortstring ,id
+    </select>
+
+    <select id="selectPermissionByParentidNotOne" resultMap="permissionResult" parameterType="hashMap">
+        SELECT
+        <include refid="permissionCloumn"></include>
+        FROM sys_permission WHERE parentid=#{parentid} AND parentid!=1
+        AND id IN
+        (SELECT sys_permission_id FROM sys_role_permission WHERE sys_role_id IN
+        (SELECT sys_role_id FROM sys_user_role WHERE sys_user_id = #{userid})
+        ) order by parentid,sortstring ,id
+    </select>
+</mapper>

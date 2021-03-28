@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalUserTypeDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalUserType" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <id column="FLOW_ID" property="flowId" jdbcType="BIGINT" />
+    <result column="TYPE_CODE" property="typeCode" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, FLOW_ID,TYPE_CODE, TYPE_NAME, REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalUserTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_user_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null and limit!=0" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_eval_user_type
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_user_type
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalUserTypeExample" >
+    delete from tbl_eval_user_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalUserType" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_user_type (ID,FLOW_ID,TYPE_CODE, TYPE_NAME,
+      REMARK)
+    values (#{id,jdbcType=BIGINT}, #{typeCode,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalUserType" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_user_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="flowId != null" >
+        FLOW_ID,
+      </if>
+      <if test="typeCode != null" >
+        TYPE_CODE,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalUserTypeExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_user_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_user_type
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.flowId != null" >
+        FLOW_ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.typeCode != null" >
+        TYPE_CODE = #{record.typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null" >
+        TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_user_type
+    set ID = #{record.id,jdbcType=BIGINT},
+      FLOW_ID = #{record.flowId,jdbcType=BIGINT},
+      TYPE_CODE = #{record.typeCode,jdbcType=VARCHAR},
+      TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalUserType" >
+    update tbl_eval_user_type
+    <set >
+      <if test="flowId != null" >
+        FLOW_ID = #{flowId,jdbcType=BIGINT},
+      </if>
+      <if test="typeCode != null" >
+        TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalUserType" >
+    update tbl_eval_user_type
+    set FLOW_ID = #{flowId,jdbcType=BIGINT},
+      TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findRowNo" parameterType="EvalUserTypeQuery" resultType="Integer">
+    SELECT TT.rownum FROM (
+    SELECT @rownum:=@rownum+1 rownum, id FROM
+    (SELECT @rownum:=0,u.id FROM tbl_eval_user_type U WHERE 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="typeCode != null and typeCode !='' ">
+        AND U.typeCode like CONCAT('%',#{code},'%')
+      </if>
+      <if test="typeName != null and typeName !=''">
+        AND U.typeName like  CONCAT('%',#{typeName},'%')
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY U.typeCode,U.id
+      </if>
+      ) XXX_T
+      ) TT WHERE 1=1
+      <if test="id != null and id !=''">
+        and  TT.id=#{id}
+      </if>
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      limit 1
+    </trim>
+  </select>
+</mapper>

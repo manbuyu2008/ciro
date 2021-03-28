@@ -1,0 +1,135 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:ehcache="http://www.springframework.org/schema/cache"
+	   xmlns:cache="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+<!-- web.xml中shiro的filter对应的bean -->
+<!-- Shiro 的Web过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 -->
+		<property name="loginUrl" value="/" />
+		<!-- 认证成功统一跳转到first.action，建议不配置，shiro认证成功自动到上一个请求路径
+		<property name="successUrl" value="/first.action"/>-->
+		<!-- 通过unauthorizedUrl指定没有权限操作时跳转页面-->
+		<property name="unauthorizedUrl" value="/refuse.jsp" />
+
+
+		<!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 authc -->
+		<property name="filterChainDefinitions">
+			<value>
+				/css/** = anon
+				/font/** = anon
+				/images/** = anon
+				/img/** = anon
+				/scene/**=anon
+				/js/** = anon
+				/plugins/** = anon
+				/static/** = anon
+				/zTree/** = anon
+				/login/** = anon
+				/error404.vm = anon
+				/admin/**	= authc
+				/eval/**	= authc
+
+			</value>
+		</property>
+	</bean>
+
+<!-- securityManager安全管理器 -->
+<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="customRealm" />
+		<!-- 注入缓存管理器 -->
+		<property name="cacheManager" ref="cacheManager"/>
+		<!-- 注入session管理器 -->
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- 记住我 -->
+		<property name="rememberMeManager" ref="rememberMeManager"/>
+
+	</bean>
+
+<!-- realm -->
+<bean id="customRealm" class="cc.water.ciro.common.shiro.CustomRealm">
+	<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+	<property name="credentialsMatcher" ref="credentialsMatcher"/>
+</bean>
+
+<!-- 凭证匹配器 -->
+<bean id="credentialsMatcher"
+	class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<property name="hashAlgorithmName" value="md5" />
+	<property name="hashIterations" value="2" />
+</bean>
+
+
+
+	<!-- 缓存管理器 -->
+<!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+    	<!--<property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>-->
+<!--</bean>-->
+    <!-- MyBatis使用ehcache缓存 start -->
+	<!-- 缓存管理器 使用Ehcache实现 -->
+	<cache:annotation-driven/>
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
+
+	<bean id="ehCacheManager"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:shiro-ehcache.xml" />
+        <property name="shared" value="true"></property> <!-- 这里是关键！！！没有必错  -->
+    </bean>
+    <!-- end MyBatis使用ehcache缓存 -->
+
+
+	<!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒60分钟 -->
+        <property name="globalSessionTimeout" value="3600000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+    </bean>
+
+
+<!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean>
+	<!-- 记住我cookie -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<!-- rememberMe是cookie的名字 -->
+		<constructor-arg value="rememberMe" />
+		<!-- 记住我cookie生效时间30天 -->
+		<property name="maxAge" value="2592000" />
+	</bean>
+
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+
+	<!--shiro生成sessionid 名字-->
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <constructor-arg name="name" value="SHRIOSESSIONID"/>
+	</bean>
+</beans>

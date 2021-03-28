@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.system.dao.FileInfoDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.system.domain.FileInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SUFFIX" property="suffix" jdbcType="VARCHAR" />
+    <result column="FILE_SIZE" property="fileSize" jdbcType="BIGINT" />
+    <result column="SAVE_NAME" property="saveName" jdbcType="VARCHAR" />
+    <result column="PATH" property="path" jdbcType="VARCHAR" />
+    <result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, NAME, SUFFIX, FILE_SIZE, SAVE_NAME, PATH, FILE_URL, ADD_TIME, UPDATE_TIME, CREATER,
+    MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.system.domain.FileInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_file_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null and limit!=0" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_file_info
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_file_info
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.system.domain.FileInfoExample" >
+    delete from tbl_file_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insertBatch"  parameterType="java.util.List">
+    insert into tbl_file_info
+    (ID, NAME, SUFFIX,
+    FILE_SIZE, SAVE_NAME, PATH,
+    FILE_URL, ADD_TIME, UPDATE_TIME,
+    CREATER, MENDER)
+    values
+    <foreach collection="list"  item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.name,jdbcType=VARCHAR}, #{item.suffix,jdbcType=VARCHAR},
+      #{item.fileSize,jdbcType=BIGINT}, #{item.saveName,jdbcType=VARCHAR}, #{item.path,jdbcType=VARCHAR},
+      #{item.fileUrl,jdbcType=VARCHAR}, #{item.addTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.creater,jdbcType=BIGINT}, #{item.mender,jdbcType=BIGINT})
+    </foreach>
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+      select LAST_INSERT_ID();
+    </selectKey>
+  </insert>
+  <insert id="insert" parameterType="cc.water.ciro.system.domain.FileInfo" >
+    insert into tbl_file_info ( NAME, SUFFIX,
+    FILE_SIZE, SAVE_NAME, PATH,
+    FILE_URL, ADD_TIME, UPDATE_TIME,
+    CREATER, MENDER)
+    values ( #{name,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR},
+    #{fileSize,jdbcType=BIGINT}, #{saveName,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
+    #{fileUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{creater,jdbcType=BIGINT}, #{mender,jdbcType=BIGINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID() AS id;
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.system.domain.FileInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_file_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="suffix != null" >
+        SUFFIX,
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE,
+      </if>
+      <if test="saveName != null" >
+        SAVE_NAME,
+      </if>
+      <if test="path != null" >
+        PATH,
+      </if>
+      <if test="fileUrl != null" >
+        FILE_URL,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="saveName != null" >
+        #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.system.domain.FileInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_file_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_file_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suffix != null" >
+        SUFFIX = #{record.suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null" >
+        FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.saveName != null" >
+        SAVE_NAME = #{record.saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        PATH = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUrl != null" >
+        FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null" >
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_file_info
+    set ID = #{record.id,jdbcType=BIGINT},
+    NAME = #{record.name,jdbcType=VARCHAR},
+    SUFFIX = #{record.suffix,jdbcType=VARCHAR},
+    FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+    SAVE_NAME = #{record.saveName,jdbcType=VARCHAR},
+    PATH = #{record.path,jdbcType=VARCHAR},
+    FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+    ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+    UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+    CREATER = #{record.creater,jdbcType=BIGINT},
+    MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.system.domain.FileInfo" >
+    update tbl_file_info
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        SUFFIX = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="saveName != null" >
+        SAVE_NAME = #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.system.domain.FileInfo" >
+    update tbl_file_info
+    set NAME = #{name,jdbcType=VARCHAR},
+    SUFFIX = #{suffix,jdbcType=VARCHAR},
+    FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+    SAVE_NAME = #{saveName,jdbcType=VARCHAR},
+    PATH = #{path,jdbcType=VARCHAR},
+    FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+    ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+    UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+    CREATER = #{creater,jdbcType=BIGINT},
+    MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

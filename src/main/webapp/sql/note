@@ -1,0 +1,52 @@
+
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+
+{"id":"","hasShowCheck":"1","onlyLeaf":"false","state":true,"data":[{"id":9,"text":"系统管理","children"
+:[{"id":2,"text":"用户管理","children":[{"id":13,"text":"用户数据查询","checked":true},{"id":3,"text":"用户添加修改"
+,"checked":true},{"id":12,"text":"用户角色授权","checked":true},{"id":10,"text":"用户删除","checked":true}],"checked"
+:true},{"id":20,"text":"部门管理","children":[{"id":23,"text":"部门数据查询","checked":true},{"id":21,"text":"
+部门添加修改","checked":true},{"id":22,"text":"部门删除","checked":true}],"checked":true},{"id":6,"text":"角色管理"
+,"children":[{"id":14,"text":"角色数据查询","checked":true},{"id":7,"text":"角色添加修改","checked":true},{"id":15
+,"text":"角色菜单授权","checked":true},{"id":11,"text":"角色删除","checked":true}],"checked":true}],"checked":true
+},{"id":30,"text":"基础信息管理","children":[{"id":31,"text":"考评参数配置","children":[{"id":32,"text":"考评参数维护"
+,"checked":true}],"checked":true},{"id":40,"text":"考评类型管理","children":[{"id":41,"text":"考评类型查询","checked"
+:true},{"id":42,"text":"考评类型添加修改","checked":true},{"id":43,"text":"考评类型删除","checked":true}],"checked"
+:true},{"id":50,"text":"考评等级管理","children":[{"id":51,"text":"考评等级查询","checked":true},{"id":52,"text"
+:"考评等级添加修改","checked":true},{"id":53,"text":"考评等级删除","checked":true}],"checked":true},{"id":59,"text"
+:"日常医德行为加分标准","children":[],"checked":true},{"id":60,"text":"日常医德行为减分标准","children":[{"id":61,"text"
+:"加分标准查询","checked":true},{"id":62,"text":"加分标准添加修改","checked":true},{"id":63,"text":"加分标准删除","checked"
+:true}],"checked":true}],"checked":true},{"id":69,"text":"考评管理","children":[{"id":70,"text":"考评期间管理"
+,"children":[{"id":71,"text":"考评期间查询","checked":true},{"id":72,"text":"考评期间添加修改","checked":true},{"id"
+:73,"text":"考评期间删除","checked":true}],"checked":true}],"checked":true}],"canUse":"true","msg":"获取数据成功"
+,"multiple":"true","roleId":"3"}

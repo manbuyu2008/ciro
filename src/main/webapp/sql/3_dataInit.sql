@@ -1,0 +1,1 @@
+insert  into `tbl_eval_user_type`(`ID`,`TYPE_CODE`,`TYPE_NAME`,`REMARK`) values (1,'01','员工考核',NULL);

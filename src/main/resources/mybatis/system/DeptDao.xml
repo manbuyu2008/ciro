@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.system.dao.DeptDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.system.domain.Dept" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="LEVEL_NUM" property="levelNum" jdbcType="BIGINT" />
+    <result column="LEVEL_CODE" property="levelCode" jdbcType="VARCHAR" />
+    <result column="DEPT_TYPE" property="deptType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="STOP_INFO" property="stopInfo" jdbcType="VARCHAR" />
+    <result column="STOP_TIME" property="stopTime" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CODE, NAME, PARENT_ID, LEVEL_NUM, LEVEL_CODE, DEPT_TYPE, STATUS, STOP_INFO, STOP_TIME, 
+    REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.system.domain.DeptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null and limit!=0" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dept
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_dept
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.system.domain.DeptExample" >
+    delete from sys_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.system.domain.Dept" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_dept (ID, CODE, NAME, 
+      PARENT_ID, LEVEL_NUM, LEVEL_CODE, 
+      DEPT_TYPE, STATUS, STOP_INFO, 
+      STOP_TIME, REMARK)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{levelNum,jdbcType=BIGINT}, #{levelCode,jdbcType=VARCHAR}, 
+      #{deptType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{stopInfo,jdbcType=VARCHAR}, 
+      #{stopTime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.system.domain.Dept" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="levelNum != null" >
+        LEVEL_NUM,
+      </if>
+      <if test="levelCode != null" >
+        LEVEL_CODE,
+      </if>
+      <if test="deptType != null" >
+        DEPT_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="stopInfo != null" >
+        STOP_INFO,
+      </if>
+      <if test="stopTime != null" >
+        STOP_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="levelNum != null" >
+        #{levelNum,jdbcType=BIGINT},
+      </if>
+      <if test="levelCode != null" >
+        #{levelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptType != null" >
+        #{deptType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="stopInfo != null" >
+        #{stopInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null" >
+        #{stopTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.system.domain.DeptExample" resultType="java.lang.Integer" >
+    select count(*) from sys_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_dept
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelNum != null" >
+        LEVEL_NUM = #{record.levelNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.levelCode != null" >
+        LEVEL_CODE = #{record.levelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptType != null" >
+        DEPT_TYPE = #{record.deptType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopInfo != null" >
+        STOP_INFO = #{record.stopInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopTime != null" >
+        STOP_TIME = #{record.stopTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_dept
+    set ID = #{record.id,jdbcType=BIGINT},
+      CODE = #{record.code,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+      LEVEL_NUM = #{record.levelNum,jdbcType=BIGINT},
+      LEVEL_CODE = #{record.levelCode,jdbcType=VARCHAR},
+      DEPT_TYPE = #{record.deptType,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      STOP_INFO = #{record.stopInfo,jdbcType=VARCHAR},
+      STOP_TIME = #{record.stopTime,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.system.domain.Dept" >
+    update sys_dept
+    <set >
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="levelNum != null" >
+        LEVEL_NUM = #{levelNum,jdbcType=BIGINT},
+      </if>
+      <if test="levelCode != null" >
+        LEVEL_CODE = #{levelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptType != null" >
+        DEPT_TYPE = #{deptType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="stopInfo != null" >
+        STOP_INFO = #{stopInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null" >
+        STOP_TIME = #{stopTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.system.domain.Dept" >
+    update sys_dept
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      LEVEL_NUM = #{levelNum,jdbcType=BIGINT},
+      LEVEL_CODE = #{levelCode,jdbcType=VARCHAR},
+      DEPT_TYPE = #{deptType,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      STOP_INFO = #{stopInfo,jdbcType=VARCHAR},
+      STOP_TIME = #{stopTime,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findDeptByContent" parameterType="String" resultMap="BaseResultMap">
+    select * from SYS_DEPT where 1=1
+    and ((upper(F_PINYIN(code)) like CONCAT('%',upper(#{txt}), '%')
+    or upper(code) like  CONCAT('%',upper(#{txt}), '%'))
+    or (upper(F_PINYIN(name)) like  CONCAT('%',upper(#{txt}), '%')
+    or upper(name) like  CONCAT('%',upper(#{txt}), '%')))
+    limit 1;
+  </select>
+
+  <select id="findDeptByName" parameterType="String" resultMap="BaseResultMap">
+    select * from SYS_DEPT where 1=1
+    and (upper(F_PINYIN(name)) like  CONCAT('%',upper(#{txt}), '%')
+    or upper(name) like  CONCAT('%',upper(#{txt}), '%'))
+    limit 1;
+  </select>
+
+  <select id="findDeptByCode" parameterType="String" resultMap="BaseResultMap">
+    select * from SYS_DEPT where 1=1
+    and (upper(F_PINYIN(code)) like CONCAT('%',upper(#{txt}), '%')
+    or upper(code) like  CONCAT('%',upper(#{txt}), '%'))
+    limit 1;
+  </select>
+
+  <select id="findList" parameterType="DeptQuery" resultMap="BaseResultMap">
+    select * from SYS_DEPT where 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND code like concat('%',#{code},'%')
+      </if>
+      <if test="_levelCodes != null">
+        <foreach collection="_levelCodes" item="i_code" index="i_num"  open="and (" separator=" OR " close=" ) ">
+          (instr(#{i_code},level_Code)>0  or instr(level_Code,#{i_code})>0)
+        </foreach>
+      </if>
+      <if test="name != null and name !=''">
+        AND name like  concat('%',#{name},'%')
+      </if>
+      <if test="levelCodeChild != null and levelCodeChild !=''">
+        AND instr(concat('-',level_Code,'-'),concat('-',#{levelCodeChild},'-'))>0
+      </if>
+      <if test="oneDeptSelect != null and oneDeptSelect !='' ">
+        and
+        ((#{oneDeptSelect}=1  AND id = #{id})
+        or (#{oneDeptSelect}=0
+        AND INSTR(concat(#{levelCodeSeparator},LEVEL_CODE,#{levelCodeSeparator}),concat(#{levelCodeSeparator},#{id},#{levelCodeSeparator}))>0 ))
+      </if>
+      <if test="parentId != null and parentId !=''">
+        AND parent_Id = #{parentId}
+      </if>
+      <if test="status != null and status !=''  and status !='-'">
+        AND status = #{status}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num"  open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(${listMap.text})) like  concat('%',#{listMap.value}, '%')
+          or upper(${listMap.text}) like  concat('%',#{listMap.value}, '%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY LEVEL_NUM,CODE,ID
+      </if>
+      <if test="pageSize != null and pageSize != ''" >
+        <if test="startRow != null" >
+          limit ${startRow}, ${pageSize}
+        </if>
+        <if test="startRow == null" >
+          limit ${pageSize}
+        </if>
+      </if>
+    </trim>
+  </select>
+
+  <select id="findListNum" parameterType="DeptQuery" resultType="Integer">
+    select count(1) from SYS_DEPT where 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND code like concat('%',#{code},'%')
+      </if>
+      <if test="_levelCodes != null">
+        <foreach collection="_levelCodes" item="i_code" index="i_num"  open="and (" separator=" OR " close=" ) ">
+          (instr(#{i_code},level_Code)>0  or instr(level_Code,#{i_code})>0)
+        </foreach>
+      </if>
+      <if test="name != null and name !=''">
+        AND name like  concat('%',#{name},'%')
+      </if>
+      <if test="levelCodeChild != null and levelCodeChild !=''">
+        AND instr(concat('-',level_Code,'-'),concat('-',#{levelCodeChild},'-'))>0
+      </if>
+      <if test="oneDeptSelect != null and oneDeptSelect !='' ">
+        and
+        ((#{oneDeptSelect}=1  AND id = #{id})
+        or (#{oneDeptSelect}=0
+        AND INSTR(concat(#{levelCodeSeparator},LEVEL_CODE,#{levelCodeSeparator}),concat(#{levelCodeSeparator},#{id},#{levelCodeSeparator}))>0 ))
+      </if>
+      <if test="parentId != null and parentId !=''">
+        AND parent_Id = #{parentId}
+      </if>
+      <if test="status != null and status !=''  and status !='-'">
+        AND status = #{status}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num"  open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(${listMap.text})) like  concat('%',#{listMap.value}, '%')
+          or upper(${listMap.text}) like  concat('%',#{listMap.value}, '%'))
+        </foreach>
+      </if>
+    </trim>
+  </select>
+
+</mapper>

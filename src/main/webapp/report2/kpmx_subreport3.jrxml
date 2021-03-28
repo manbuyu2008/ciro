@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kpmx_subreport3" pageWidth="484" pageHeight="802" columnWidth="484" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f980018e-ec16-45fb-b0fd-b7440ab1e9a1">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="eventDate" class="java.lang.String">
+		<fieldDescription><![CDATA[eventDate]]></fieldDescription>
+	</field>
+	<field name="eventName" class="java.lang.String">
+		<fieldDescription><![CDATA[eventName]]></fieldDescription>
+	</field>
+	<field name="stdId" class="java.lang.String">
+		<fieldDescription><![CDATA[stdId]]></fieldDescription>
+	</field>
+	<field name="eventXs" class="java.lang.String">
+		<fieldDescription><![CDATA[eventXs]]></fieldDescription>
+	</field>
+	<field name="eventJb" class="java.lang.String">
+		<fieldDescription><![CDATA[eventJb]]></fieldDescription>
+	</field>
+	<field name="score" class="java.lang.String">
+		<fieldDescription><![CDATA[score]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="71" height="15" uuid="994ff367-c669-4f96-b1d9-f3e0298dab84"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eventDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="71" y="0" width="194" height="15" uuid="fbbf3cfd-0da3-4bce-8951-3ebc557befe7"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eventName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="346" y="0" width="84" height="15" uuid="e276aa1b-abdc-4b1f-ad2a-e75ad14c3cc8"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eventXs}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="265" y="0" width="81" height="15" uuid="7bbbdaa6-a53d-455a-a834-040cc8d1653a"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eventJb}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="430" y="0" width="54" height="15" uuid="44ab9fe2-6389-462f-9f54-db28c8257124"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalStdDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalStd" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="EVENT_TYPE" property="eventType" jdbcType="VARCHAR" />
+    <result column="BEGIN_SCORE" property="beginScore" jdbcType="DECIMAL" />
+    <result column="END_SCORE" property="endScore" jdbcType="DECIMAL" />
+    <result column="SCORE_MAX" property="scoreMax" jdbcType="DECIMAL" />
+    <result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CODE, NAME, REMARK, STATUS, EVENT_TYPE, BEGIN_SCORE, END_SCORE, SCORE_MAX, ADD_TIME,
+    UPDATE_TIME, CREATER, MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalStdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_std
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null and limit!=0" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_eval_std
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_std
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalStdExample" >
+    delete from tbl_eval_std
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalStd" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_std ( CODE, NAME,
+    REMARK, STATUS, EVENT_TYPE,
+    BEGIN_SCORE, END_SCORE, SCORE_MAX,
+    ADD_TIME, UPDATE_TIME, CREATER,
+    MENDER)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{eventType,jdbcType=VARCHAR},
+    #{beginScore,jdbcType=DECIMAL}, #{endScore,jdbcType=DECIMAL}, #{scoreMax,jdbcType=DECIMAL},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT},
+    #{mender,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalStd" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_std
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE,
+      </if>
+      <if test="beginScore != null" >
+        BEGIN_SCORE,
+      </if>
+      <if test="endScore != null" >
+        END_SCORE,
+      </if>
+      <if test="scoreMax != null" >
+        SCORE_MAX,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="beginScore != null" >
+        #{beginScore,jdbcType=DECIMAL},
+      </if>
+      <if test="endScore != null" >
+        #{endScore,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreMax != null" >
+        #{scoreMax,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalStdExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_std
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_std
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null" >
+        EVENT_TYPE = #{record.eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginScore != null" >
+        BEGIN_SCORE = #{record.beginScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.endScore != null" >
+        END_SCORE = #{record.endScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scoreMax != null" >
+        SCORE_MAX = #{record.scoreMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addTime != null" >
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_std
+    set ID = #{record.id,jdbcType=BIGINT},
+    CODE = #{record.code,jdbcType=VARCHAR},
+    NAME = #{record.name,jdbcType=VARCHAR},
+    REMARK = #{record.remark,jdbcType=VARCHAR},
+    STATUS = #{record.status,jdbcType=VARCHAR},
+    EVENT_TYPE = #{record.eventType,jdbcType=VARCHAR},
+    BEGIN_SCORE = #{record.beginScore,jdbcType=DECIMAL},
+    END_SCORE = #{record.endScore,jdbcType=DECIMAL},
+    SCORE_MAX = #{record.scoreMax,jdbcType=DECIMAL},
+    ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+    UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+    CREATER = #{record.creater,jdbcType=BIGINT},
+    MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalStd" >
+    update tbl_eval_std
+    <set >
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="beginScore != null" >
+        BEGIN_SCORE = #{beginScore,jdbcType=DECIMAL},
+      </if>
+      <if test="endScore != null" >
+        END_SCORE = #{endScore,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreMax != null" >
+        SCORE_MAX = #{scoreMax,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalStd" >
+    update tbl_eval_std
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      EVENT_TYPE = #{eventType,jdbcType=VARCHAR},
+      BEGIN_SCORE = #{beginScore,jdbcType=DECIMAL},
+      END_SCORE = #{endScore,jdbcType=DECIMAL},
+      SCORE_MAX = #{scoreMax,jdbcType=DECIMAL},
+      ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=BIGINT},
+      MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findRowNo" parameterType="EvalStdQuery" resultType="Integer">
+    SELECT TT.rownum FROM (
+    SELECT @rownum:=@rownum+1 rownum, id FROM
+    (SELECT @rownum:=0,u.id FROM tbl_eval_std U WHERE 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null" >
+        AND u.status = #{status}
+      </if>
+      <if test="eventType != null" >
+        AND u.event_type = #{eventType}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY U.code,U.id
+      </if>
+      ) XXX_T
+      ) TT WHERE 1=1
+      <if test="id != null and id !=''">
+        and  TT.id=#{id}
+      </if>
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      limit 1
+    </trim>
+  </select>
+
+  <select id="findListNum" parameterType="EvalStdQuery" resultType="Integer">
+    select count(1) num from tbl_eval_std U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null" >
+        AND u.status = #{status}
+      </if>
+      <if test="eventType != null" >
+        AND u.event_type = #{eventType}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.CODE,U.name,U.id
+      </if>
+    </trim>
+  </select>
+
+  <select id="findList" parameterType="EvalStdQuery" resultMap="BaseResultMap">
+    select U.* from tbl_eval_std U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="code != null and code !='' ">
+        AND U.code like CONCAT('%',#{code},'%')
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="status != null" >
+        AND u.status = #{status}
+      </if>
+      <if test="eventType != null" >
+        AND u.event_type = #{eventType}
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.CODE,U.name,U.id
+      </if>
+      <if test="pageSize != null and pageSize !='' ">
+        <if test="startRow != null">
+          limit ${startRow}, ${pageSize}
+        </if>
+        <if test="startRow == null">
+          limit ${pageSize}
+        </if>
+      </if>
+    </trim>
+  </select>
+  
+</mapper>

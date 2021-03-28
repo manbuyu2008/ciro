@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.water.ciro.eval.mapper.EvalReportPrintDao">
+
+    <resultMap id="reportDetailResult" type="cc.water.ciro.eval.reportBean.ReportPrintUser">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="periodName" property="periodName" jdbcType="VARCHAR"/>
+        <result column="ksName" property="ksName" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="nl" property="nl" javaType="int" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="zc" property="zc" jdbcType="VARCHAR"/>
+        <result column="selfAdvice" property="selfAdvice" jdbcType="VARCHAR"/>
+        <result column="selfScore" property="selfScore" jdbcType="VARCHAR"/>
+        <result column="selfLv" property="selfLv" jdbcType="VARCHAR"/>
+        <result column="selfQm" property="selfQm" jdbcType="VARCHAR"/>
+        <result column="ksAdvice" property="ksAdvice" jdbcType="VARCHAR"/>
+        <result column="ksScore" property="ksScore" jdbcType="VARCHAR"/>
+        <result column="ksLv" property="ksLv" jdbcType="VARCHAR"/>
+        <result column="ksQm" property="ksQm" jdbcType="VARCHAR"/>
+        <result column="dkAdvice" property="dkAdvice" jdbcType="VARCHAR"/>
+        <result column="dkScore" property="dkScore" jdbcType="VARCHAR"/>
+        <result column="dkLv" property="dkLv" jdbcType="VARCHAR"/>
+        <result column="dkQm" property="dkQm" jdbcType="VARCHAR"/>
+        <result column="corpAdvice" property="corpAdvice" jdbcType="VARCHAR"/>
+        <result column="corpScore" property="corpScore" jdbcType="VARCHAR"/>
+        <result column="corpLv" property="corpLv" jdbcType="VARCHAR"/>
+        <result column="corpQm" property="corpQm" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="reportDetailPrint" resultMap="reportDetailResult" parameterType="String">
+        SELECT T.ID,
+       Z.NAME AS periodName,
+       (SELECT NAME FROM sys_dept de WHERE de.id=t.ks) AS ksName,
+       P.NAME AS userName,
+       CASE WHEN T.SEX=1 THEN '男' ELSE '女'END  sex,
+       T.nl,
+       T.zc,
+       t.self_advice selfAdvice,
+       t.self_score selfScore,
+       (SELECT NAME  FROM tbl_eval_level B WHERE B.ID =t.self_lv) selfLv,
+       CONCAT(P.NAME,'   ',DATE_FORMAT(t.create_date,"%Y-%m-%d")) selfQm,
+       t.ks_advice ksAdvice,
+       t.ks_score ksScore,
+       (SELECT NAME  FROM tbl_eval_level B WHERE  B.ID =t.ks_lv) ksLv,
+       CONCAT((SELECT NAME FROM sys_user WHERE ID=t.KS_USER_ID),'   ',DATE_FORMAT(t.ks_DATE,"%Y-%m-%d"))  ksQm,
+       t.dk_advice dkAdvice,
+       t.dk_score dkScore,
+       (SELECT NAME  FROM tbl_eval_level B WHERE B.ID =t.dk_lv) dkLv,
+       CONCAT((SELECT NAME FROM sys_user WHERE ID=t.dk_USER_ID),'   ',DATE_FORMAT(t.dk_DATE,"%Y-%m-%d"))  dkQm,
+       t.corp_advice corpAdvice,
+       t.corp_score corpScore,
+       (SELECT NAME  FROM tbl_eval_level B WHERE B.ID =t.corp_lv) corpLv,
+       CONCAT((SELECT NAME FROM sys_user WHERE ID=t.dw_USER_ID),'   ',DATE_FORMAT(t.corp_DATE,"%Y-%m-%d"))  corpQm
+  FROM tbl_eval_base_info T
+  LEFT JOIN SYS_user P ON P.ID = T.user_id
+  LEFT JOIN tbl_eval_zq Z ON Z.ID = T.period_id
+  WHERE T.ID=#{id}
+    </select>
+
+
+    <resultMap id="reportEventResult" type="cc.water.ciro.eval.reportBean.ReportPrintEventEnum">
+        <result column="eventDate" property="eventDate" jdbcType="VARCHAR"/>
+        <result column="eventName" property="eventName" jdbcType="VARCHAR"/>
+        <result column="eventJb" property="eventJb" jdbcType="VARCHAR"/>
+        <result column="eventXs" property="eventXs" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="VARCHAR"/>
+        <result column="stdId" property="stdId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="reportSelfEnumPrint" resultMap="reportEventResult" parameterType="EvalReportPrintQuery">
+        SELECT event_date eventDate,content eventName,xs  eventXs
+        FROM tbl_eval_self_enum WHERE PARENT_ID=#{id}
+    </select>
+
+    <select id="reportEventPrint" resultMap="reportEventResult" parameterType="EvalReportPrintQuery">
+       SELECT id,DATE_FORMAT(event_date,"%Y-%m-%d") eventDate,event_name eventName ,std_id stdId,event_xs eventXs,event_jb eventJb,score,parent_id,type
+            FROM tbl_eval_event_enum
+            WHERE  type = #{type} AND status=#{status} AND parent_id=#{id}
+    </select>
+
+</mapper>

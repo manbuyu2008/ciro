@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalBaseInfoDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalBaseInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="period_id" property="periodId" jdbcType="VARCHAR" />
+    <result column="KS" property="ks" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="NL" property="nl" jdbcType="INTEGER" />
+    <result column="ZC" property="zc" jdbcType="VARCHAR" />
+    <result column="SELF_ADVICE" property="selfAdvice" jdbcType="VARCHAR" />
+    <result column="SELF_DATE" property="selfDate" jdbcType="TIMESTAMP" />
+    <result column="SELF_LV" property="selfLv" jdbcType="VARCHAR" />
+    <result column="SELF_SCORE" property="selfScore" jdbcType="DECIMAL" />
+    <result column="KS_USER_ID" property="ksUserId" jdbcType="BIGINT" />
+    <result column="KS_ADVICE" property="ksAdvice" jdbcType="VARCHAR" />
+    <result column="KS_DATE" property="ksDate" jdbcType="TIMESTAMP" />
+    <result column="KS_LV" property="ksLv" jdbcType="VARCHAR" />
+    <result column="KS_SCORE" property="ksScore" jdbcType="DECIMAL" />
+    <result column="DK_USER_ID" property="dkUserId" jdbcType="BIGINT" />
+    <result column="DK_ADVICE" property="dkAdvice" jdbcType="VARCHAR" />
+    <result column="DK_DATE" property="dkDate" jdbcType="TIMESTAMP" />
+    <result column="DK_LV" property="dkLv" jdbcType="VARCHAR" />
+    <result column="DK_SCORE" property="dkScore" jdbcType="DECIMAL" />
+    <result column="DW_USER_ID" property="dwUserId" jdbcType="BIGINT" />
+    <result column="CORP_ADVICE" property="corpAdvice" jdbcType="VARCHAR" />
+    <result column="CORP_DATE" property="corpDate" jdbcType="TIMESTAMP" />
+    <result column="CORP_LV" property="corpLv" jdbcType="VARCHAR" />
+    <result column="CORP_SCORE" property="corpScore" jdbcType="DECIMAL" />
+    <result column="EVAL_LV" property="evalLv" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="FLOW_ID" property="flowId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, period_id, KS, USER_ID, SEX, NL, ZC, SELF_ADVICE, SELF_DATE, SELF_LV, SELF_SCORE,
+    KS_USER_ID, KS_ADVICE, KS_DATE, KS_LV, KS_SCORE, DK_USER_ID, DK_ADVICE, DK_DATE,
+    DK_LV, DK_SCORE, DW_USER_ID, CORP_ADVICE, CORP_DATE, CORP_LV, CORP_SCORE, EVAL_LV,
+    SCORE, FLOW_ID, STATUS, create_date, update_date, CREATER, MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalBaseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="_sql != null and _sql !=''">
+      ${_sql}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_eval_base_info
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_base_info
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalBaseInfoExample" >
+    delete from tbl_eval_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalBaseInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_base_info (ID, period_id, KS,
+    USER_ID, SEX, NL, ZC,
+    SELF_ADVICE, SELF_DATE, SELF_LV,
+    SELF_SCORE, KS_USER_ID, KS_ADVICE,
+    KS_DATE, KS_LV, KS_SCORE,
+    DK_USER_ID, DK_ADVICE, DK_DATE,
+    DK_LV, DK_SCORE, DW_USER_ID,
+    CORP_ADVICE, CORP_DATE, CORP_LV,
+    CORP_SCORE, EVAL_LV, SCORE,
+    FLOW_ID, STATUS, create_date,
+    update_date, CREATER, MENDER
+    )
+    values (#{id,jdbcType=BIGINT}, #{periodId,jdbcType=VARCHAR}, #{ks,jdbcType=VARCHAR},
+    #{userId,jdbcType=BIGINT}, #{sex,jdbcType=VARCHAR}, #{nl,jdbcType=INTEGER}, #{zc,jdbcType=VARCHAR},
+    #{selfAdvice,jdbcType=VARCHAR}, #{selfDate,jdbcType=TIMESTAMP}, #{selfLv,jdbcType=VARCHAR},
+    #{selfScore,jdbcType=DECIMAL}, #{ksUserId,jdbcType=BIGINT}, #{ksAdvice,jdbcType=VARCHAR},
+    #{ksDate,jdbcType=TIMESTAMP}, #{ksLv,jdbcType=VARCHAR}, #{ksScore,jdbcType=DECIMAL},
+    #{dkUserId,jdbcType=BIGINT}, #{dkAdvice,jdbcType=VARCHAR}, #{dkDate,jdbcType=TIMESTAMP},
+    #{dkLv,jdbcType=VARCHAR}, #{dkScore,jdbcType=DECIMAL}, #{dwUserId,jdbcType=BIGINT},
+    #{corpAdvice,jdbcType=VARCHAR}, #{corpDate,jdbcType=TIMESTAMP}, #{corpLv,jdbcType=VARCHAR},
+    #{corpScore,jdbcType=DECIMAL}, #{evalLv,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL},
+    #{flowId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP},
+    #{updateDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT}, #{mender,jdbcType=BIGINT}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalBaseInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="periodId != null" >
+        period_id,
+      </if>
+      <if test="ks != null" >
+        KS,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="nl != null" >
+        NL,
+      </if>
+      <if test="zc != null" >
+        ZC,
+      </if>
+      <if test="selfAdvice != null" >
+        SELF_ADVICE,
+      </if>
+      <if test="selfDate != null" >
+        SELF_DATE,
+      </if>
+      <if test="selfLv != null" >
+        SELF_LV,
+      </if>
+      <if test="selfScore != null" >
+        SELF_SCORE,
+      </if>
+      <if test="ksUserId != null" >
+        KS_USER_ID,
+      </if>
+      <if test="ksAdvice != null" >
+        KS_ADVICE,
+      </if>
+      <if test="ksDate != null" >
+        KS_DATE,
+      </if>
+      <if test="ksLv != null" >
+        KS_LV,
+      </if>
+      <if test="ksScore != null" >
+        KS_SCORE,
+      </if>
+      <if test="dkUserId != null" >
+        DK_USER_ID,
+      </if>
+      <if test="dkAdvice != null" >
+        DK_ADVICE,
+      </if>
+      <if test="dkDate != null" >
+        DK_DATE,
+      </if>
+      <if test="dkLv != null" >
+        DK_LV,
+      </if>
+      <if test="dkScore != null" >
+        DK_SCORE,
+      </if>
+      <if test="dwUserId != null" >
+        DW_USER_ID,
+      </if>
+      <if test="corpAdvice != null" >
+        CORP_ADVICE,
+      </if>
+      <if test="corpDate != null" >
+        CORP_DATE,
+      </if>
+      <if test="corpLv != null" >
+        CORP_LV,
+      </if>
+      <if test="corpScore != null" >
+        CORP_SCORE,
+      </if>
+      <if test="evalLv != null" >
+        EVAL_LV,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="flowId != null" >
+        FLOW_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="periodId != null" >
+        #{periodId,jdbcType=VARCHAR},
+      </if>
+      <if test="ks != null" >
+        #{ks,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null" >
+        #{nl,jdbcType=INTEGER},
+      </if>
+      <if test="zc != null" >
+        #{zc,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAdvice != null" >
+        #{selfAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="selfDate != null" >
+        #{selfDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="selfLv != null" >
+        #{selfLv,jdbcType=VARCHAR},
+      </if>
+      <if test="selfScore != null" >
+        #{selfScore,jdbcType=DECIMAL},
+      </if>
+      <if test="ksUserId != null" >
+        #{ksUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ksAdvice != null" >
+        #{ksAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="ksDate != null" >
+        #{ksDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ksLv != null" >
+        #{ksLv,jdbcType=VARCHAR},
+      </if>
+      <if test="ksScore != null" >
+        #{ksScore,jdbcType=DECIMAL},
+      </if>
+      <if test="dkUserId != null" >
+        #{dkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="dkAdvice != null" >
+        #{dkAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="dkDate != null" >
+        #{dkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dkLv != null" >
+        #{dkLv,jdbcType=VARCHAR},
+      </if>
+      <if test="dkScore != null" >
+        #{dkScore,jdbcType=DECIMAL},
+      </if>
+      <if test="dwUserId != null" >
+        #{dwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="corpAdvice != null" >
+        #{corpAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="corpDate != null" >
+        #{corpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="corpLv != null" >
+        #{corpLv,jdbcType=VARCHAR},
+      </if>
+      <if test="corpScore != null" >
+        #{corpScore,jdbcType=DECIMAL},
+      </if>
+      <if test="evalLv != null" >
+        #{evalLv,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="flowId != null" >
+        #{flowId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalBaseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_base_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.periodId != null" >
+        period_id = #{record.periodId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ks != null" >
+        KS = #{record.ks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nl != null" >
+        NL = #{record.nl,jdbcType=INTEGER},
+      </if>
+      <if test="record.zc != null" >
+        ZC = #{record.zc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfAdvice != null" >
+        SELF_ADVICE = #{record.selfAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfDate != null" >
+        SELF_DATE = #{record.selfDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.selfLv != null" >
+        SELF_LV = #{record.selfLv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfScore != null" >
+        SELF_SCORE = #{record.selfScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ksUserId != null" >
+        KS_USER_ID = #{record.ksUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ksAdvice != null" >
+        KS_ADVICE = #{record.ksAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksDate != null" >
+        KS_DATE = #{record.ksDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ksLv != null" >
+        KS_LV = #{record.ksLv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksScore != null" >
+        KS_SCORE = #{record.ksScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dkUserId != null" >
+        DK_USER_ID = #{record.dkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dkAdvice != null" >
+        DK_ADVICE = #{record.dkAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkDate != null" >
+        DK_DATE = #{record.dkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dkLv != null" >
+        DK_LV = #{record.dkLv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkScore != null" >
+        DK_SCORE = #{record.dkScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dwUserId != null" >
+        DW_USER_ID = #{record.dwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.corpAdvice != null" >
+        CORP_ADVICE = #{record.corpAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpDate != null" >
+        CORP_DATE = #{record.corpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.corpLv != null" >
+        CORP_LV = #{record.corpLv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpScore != null" >
+        CORP_SCORE = #{record.corpScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.evalLv != null" >
+        EVAL_LV = #{record.evalLv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.flowId != null" >
+        FLOW_ID = #{record.flowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_base_info
+    set ID = #{record.id,jdbcType=BIGINT},
+    period_id = #{record.periodId,jdbcType=VARCHAR},
+    KS = #{record.ks,jdbcType=VARCHAR},
+    USER_ID = #{record.userId,jdbcType=BIGINT},
+    SEX = #{record.sex,jdbcType=VARCHAR},
+    NL = #{record.nl,jdbcType=INTEGER},
+    ZC = #{record.zc,jdbcType=VARCHAR},
+    SELF_ADVICE = #{record.selfAdvice,jdbcType=VARCHAR},
+    SELF_DATE = #{record.selfDate,jdbcType=TIMESTAMP},
+    SELF_LV = #{record.selfLv,jdbcType=VARCHAR},
+    SELF_SCORE = #{record.selfScore,jdbcType=DECIMAL},
+    KS_USER_ID = #{record.ksUserId,jdbcType=BIGINT},
+    KS_ADVICE = #{record.ksAdvice,jdbcType=VARCHAR},
+    KS_DATE = #{record.ksDate,jdbcType=TIMESTAMP},
+    KS_LV = #{record.ksLv,jdbcType=VARCHAR},
+    KS_SCORE = #{record.ksScore,jdbcType=DECIMAL},
+    DK_USER_ID = #{record.dkUserId,jdbcType=BIGINT},
+    DK_ADVICE = #{record.dkAdvice,jdbcType=VARCHAR},
+    DK_DATE = #{record.dkDate,jdbcType=TIMESTAMP},
+    DK_LV = #{record.dkLv,jdbcType=VARCHAR},
+    DK_SCORE = #{record.dkScore,jdbcType=DECIMAL},
+    DW_USER_ID = #{record.dwUserId,jdbcType=BIGINT},
+    CORP_ADVICE = #{record.corpAdvice,jdbcType=VARCHAR},
+    CORP_DATE = #{record.corpDate,jdbcType=TIMESTAMP},
+    CORP_LV = #{record.corpLv,jdbcType=VARCHAR},
+    CORP_SCORE = #{record.corpScore,jdbcType=DECIMAL},
+    EVAL_LV = #{record.evalLv,jdbcType=VARCHAR},
+    SCORE = #{record.score,jdbcType=DECIMAL},
+    FLOW_ID = #{record.flowId,jdbcType=BIGINT},
+    STATUS = #{record.status,jdbcType=INTEGER},
+    create_date = #{record.createDate,jdbcType=TIMESTAMP},
+    update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+    CREATER = #{record.creater,jdbcType=BIGINT},
+    MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalBaseInfo" >
+    update tbl_eval_base_info
+    <set >
+      <if test="periodId != null" >
+        period_id = #{periodId,jdbcType=VARCHAR},
+      </if>
+      <if test="ks != null" >
+        KS = #{ks,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null" >
+        NL = #{nl,jdbcType=INTEGER},
+      </if>
+      <if test="zc != null" >
+        ZC = #{zc,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAdvice != null" >
+        SELF_ADVICE = #{selfAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="selfDate != null" >
+        SELF_DATE = #{selfDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="selfLv != null" >
+        SELF_LV = #{selfLv,jdbcType=VARCHAR},
+      </if>
+      <if test="selfScore != null" >
+        SELF_SCORE = #{selfScore,jdbcType=DECIMAL},
+      </if>
+      <if test="ksUserId != null" >
+        KS_USER_ID = #{ksUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ksAdvice != null" >
+        KS_ADVICE = #{ksAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="ksDate != null" >
+        KS_DATE = #{ksDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ksLv != null" >
+        KS_LV = #{ksLv,jdbcType=VARCHAR},
+      </if>
+      <if test="ksScore != null" >
+        KS_SCORE = #{ksScore,jdbcType=DECIMAL},
+      </if>
+      <if test="dkUserId != null" >
+        DK_USER_ID = #{dkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="dkAdvice != null" >
+        DK_ADVICE = #{dkAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="dkDate != null" >
+        DK_DATE = #{dkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dkLv != null" >
+        DK_LV = #{dkLv,jdbcType=VARCHAR},
+      </if>
+      <if test="dkScore != null" >
+        DK_SCORE = #{dkScore,jdbcType=DECIMAL},
+      </if>
+      <if test="dwUserId != null" >
+        DW_USER_ID = #{dwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="corpAdvice != null" >
+        CORP_ADVICE = #{corpAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="corpDate != null" >
+        CORP_DATE = #{corpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="corpLv != null" >
+        CORP_LV = #{corpLv,jdbcType=VARCHAR},
+      </if>
+      <if test="corpScore != null" >
+        CORP_SCORE = #{corpScore,jdbcType=DECIMAL},
+      </if>
+      <if test="evalLv != null" >
+        EVAL_LV = #{evalLv,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="flowId != null" >
+        FLOW_ID = #{flowId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalBaseInfo" >
+    update tbl_eval_base_info
+    set period_id = #{periodId,jdbcType=VARCHAR},
+    KS = #{ks,jdbcType=VARCHAR},
+    USER_ID = #{userId,jdbcType=BIGINT},
+    SEX = #{sex,jdbcType=VARCHAR},
+    NL = #{nl,jdbcType=INTEGER},
+    ZC = #{zc,jdbcType=VARCHAR},
+    SELF_ADVICE = #{selfAdvice,jdbcType=VARCHAR},
+    SELF_DATE = #{selfDate,jdbcType=TIMESTAMP},
+    SELF_LV = #{selfLv,jdbcType=VARCHAR},
+    SELF_SCORE = #{selfScore,jdbcType=DECIMAL},
+    KS_USER_ID = #{ksUserId,jdbcType=BIGINT},
+    KS_ADVICE = #{ksAdvice,jdbcType=VARCHAR},
+    KS_DATE = #{ksDate,jdbcType=TIMESTAMP},
+    KS_LV = #{ksLv,jdbcType=VARCHAR},
+    KS_SCORE = #{ksScore,jdbcType=DECIMAL},
+    DK_USER_ID = #{dkUserId,jdbcType=BIGINT},
+    DK_ADVICE = #{dkAdvice,jdbcType=VARCHAR},
+    DK_DATE = #{dkDate,jdbcType=TIMESTAMP},
+    DK_LV = #{dkLv,jdbcType=VARCHAR},
+    DK_SCORE = #{dkScore,jdbcType=DECIMAL},
+    DW_USER_ID = #{dwUserId,jdbcType=BIGINT},
+    CORP_ADVICE = #{corpAdvice,jdbcType=VARCHAR},
+    CORP_DATE = #{corpDate,jdbcType=TIMESTAMP},
+    CORP_LV = #{corpLv,jdbcType=VARCHAR},
+    CORP_SCORE = #{corpScore,jdbcType=DECIMAL},
+    EVAL_LV = #{evalLv,jdbcType=VARCHAR},
+    SCORE = #{score,jdbcType=DECIMAL},
+    FLOW_ID = #{flowId,jdbcType=BIGINT},
+    STATUS = #{status,jdbcType=INTEGER},
+    create_date = #{createDate,jdbcType=TIMESTAMP},
+    update_date = #{updateDate,jdbcType=TIMESTAMP},
+    CREATER = #{creater,jdbcType=BIGINT},
+    MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

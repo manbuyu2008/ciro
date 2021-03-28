@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalEventEnumDao">
+    <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalEventEnum" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="STD_ID" property="stdId" jdbcType="VARCHAR" />
+        <result column="EVENT_DATE" property="eventDate" jdbcType="TIMESTAMP" />
+        <result column="EVENT_NAME" property="eventName" jdbcType="VARCHAR" />
+        <result column="EVENT_XS" property="eventXs" jdbcType="VARCHAR" />
+        <result column="EVENT_JB" property="eventJb" jdbcType="VARCHAR" />
+        <result column="SCORE" property="score" jdbcType="DECIMAL" />
+        <result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+        <result column="EVENT_ID" property="eventId" jdbcType="BIGINT" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="CREATER" property="creater" jdbcType="BIGINT" />
+        <result column="MENDER" property="mender" jdbcType="BIGINT" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        ID, PARENT_ID, TYPE, STD_ID, EVENT_DATE, EVENT_NAME, EVENT_XS, EVENT_JB, SCORE, FILE_URL,
+        EVENT_ID, STATUS, create_date, update_date, CREATER, MENDER
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalEventEnumExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from tbl_eval_event_enum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null" >
+            <if test="offset != null" >
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null" >
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from tbl_eval_event_enum
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from tbl_eval_event_enum
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalEventEnumExample" >
+        delete from tbl_eval_event_enum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalEventEnum" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tbl_eval_event_enum (ID, PARENT_ID, TYPE,
+        STD_ID, EVENT_DATE, EVENT_NAME,
+        EVENT_XS, EVENT_JB, SCORE,
+        FILE_URL, EVENT_ID, STATUS,
+        create_date, update_date, CREATER,
+        MENDER)
+        values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{stdId,jdbcType=VARCHAR}, #{eventDate,jdbcType=TIMESTAMP}, #{eventName,jdbcType=VARCHAR},
+        #{eventXs,jdbcType=VARCHAR}, #{eventJb,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL},
+        #{fileUrl,jdbcType=VARCHAR}, #{eventId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT},
+        #{mender,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalEventEnum" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tbl_eval_event_enum
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            ID,
+            <if test="parentId != null" >
+                PARENT_ID,
+            </if>
+            <if test="type != null" >
+                TYPE,
+            </if>
+            <if test="stdId != null" >
+                STD_ID,
+            </if>
+            <if test="eventDate != null" >
+                EVENT_DATE,
+            </if>
+            <if test="eventName != null" >
+                EVENT_NAME,
+            </if>
+            <if test="eventXs != null" >
+                EVENT_XS,
+            </if>
+            <if test="eventJb != null" >
+                EVENT_JB,
+            </if>
+            <if test="score != null" >
+                SCORE,
+            </if>
+            <if test="fileUrl != null" >
+                FILE_URL,
+            </if>
+            <if test="eventId != null" >
+                EVENT_ID,
+            </if>
+            <if test="status != null" >
+                STATUS,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="creater != null" >
+                CREATER,
+            </if>
+            <if test="mender != null" >
+                MENDER,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            #{id,jdbcType=BIGINT},
+            <if test="parentId != null" >
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="stdId != null" >
+                #{stdId,jdbcType=VARCHAR},
+            </if>
+            <if test="eventDate != null" >
+                #{eventDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eventName != null" >
+                #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventXs != null" >
+                #{eventXs,jdbcType=VARCHAR},
+            </if>
+            <if test="eventJb != null" >
+                #{eventJb,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="fileUrl != null" >
+                #{fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="eventId != null" >
+                #{eventId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null" >
+                #{creater,jdbcType=BIGINT},
+            </if>
+            <if test="mender != null" >
+                #{mender,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalEventEnumExample" resultType="java.lang.Integer" >
+        select count(*) from tbl_eval_event_enum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update tbl_eval_event_enum
+        <set >
+            <if test="record.id != null" >
+                ID = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.parentId != null" >
+                PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null" >
+                TYPE = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stdId != null" >
+                STD_ID = #{record.stdId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.eventDate != null" >
+                EVENT_DATE = #{record.eventDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.eventName != null" >
+                EVENT_NAME = #{record.eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.eventXs != null" >
+                EVENT_XS = #{record.eventXs,jdbcType=VARCHAR},
+            </if>
+            <if test="record.eventJb != null" >
+                EVENT_JB = #{record.eventJb,jdbcType=VARCHAR},
+            </if>
+            <if test="record.score != null" >
+                SCORE = #{record.score,jdbcType=DECIMAL},
+            </if>
+            <if test="record.fileUrl != null" >
+                FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.eventId != null" >
+                EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+            </if>
+            <if test="record.status != null" >
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createDate != null" >
+                create_date = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateDate != null" >
+                update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.creater != null" >
+                CREATER = #{record.creater,jdbcType=BIGINT},
+            </if>
+            <if test="record.mender != null" >
+                MENDER = #{record.mender,jdbcType=BIGINT},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update tbl_eval_event_enum
+        set ID = #{record.id,jdbcType=BIGINT},
+        PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+        TYPE = #{record.type,jdbcType=VARCHAR},
+        STD_ID = #{record.stdId,jdbcType=VARCHAR},
+        EVENT_DATE = #{record.eventDate,jdbcType=TIMESTAMP},
+        EVENT_NAME = #{record.eventName,jdbcType=VARCHAR},
+        EVENT_XS = #{record.eventXs,jdbcType=VARCHAR},
+        EVENT_JB = #{record.eventJb,jdbcType=VARCHAR},
+        SCORE = #{record.score,jdbcType=DECIMAL},
+        FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+        EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+        CREATER = #{record.creater,jdbcType=BIGINT},
+        MENDER = #{record.mender,jdbcType=BIGINT}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalEventEnum" >
+        update tbl_eval_event_enum
+        <set >
+            <if test="parentId != null" >
+                PARENT_ID = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="stdId != null" >
+                STD_ID = #{stdId,jdbcType=VARCHAR},
+            </if>
+            <if test="eventDate != null" >
+                EVENT_DATE = #{eventDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eventName != null" >
+                EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventXs != null" >
+                EVENT_XS = #{eventXs,jdbcType=VARCHAR},
+            </if>
+            <if test="eventJb != null" >
+                EVENT_JB = #{eventJb,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                SCORE = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="fileUrl != null" >
+                FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="eventId != null" >
+                EVENT_ID = #{eventId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null" >
+                CREATER = #{creater,jdbcType=BIGINT},
+            </if>
+            <if test="mender != null" >
+                MENDER = #{mender,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalEventEnum" >
+        update tbl_eval_event_enum
+        set PARENT_ID = #{parentId,jdbcType=VARCHAR},
+        TYPE = #{type,jdbcType=VARCHAR},
+        STD_ID = #{stdId,jdbcType=VARCHAR},
+        EVENT_DATE = #{eventDate,jdbcType=TIMESTAMP},
+        EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+        EVENT_XS = #{eventXs,jdbcType=VARCHAR},
+        EVENT_JB = #{eventJb,jdbcType=VARCHAR},
+        SCORE = #{score,jdbcType=DECIMAL},
+        FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+        EVENT_ID = #{eventId,jdbcType=BIGINT},
+        STATUS = #{status,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        CREATER = #{creater,jdbcType=BIGINT},
+        MENDER = #{mender,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into tbl_eval_event_enum (ID, PARENT_ID, TYPE,
+        STD_ID, EVENT_DATE, EVENT_NAME,
+        EVENT_XS, EVENT_JB, SCORE,
+        EVENT_ID, STATUS, create_date,
+        update_date, CREATER, MENDER
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.parentId,jdbcType=VARCHAR}, #{item.type,jdbcType=VARCHAR},
+            #{item.stdId,jdbcType=VARCHAR}, #{item.eventDate,jdbcType=TIMESTAMP}, #{item.eventName,jdbcType=VARCHAR},
+            #{item.eventXs,jdbcType=VARCHAR}, #{item.eventJb,jdbcType=VARCHAR}, #{item.score,jdbcType=DECIMAL},
+            #{item.eventId,jdbcType=BIGINT}, #{item.status,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.creater,jdbcType=BIGINT}, #{item.mender,jdbcType=BIGINT}
+            )
+        </foreach>
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:ehcache="http://www.springframework.org/schema/cache"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <import resource="spring/spring-*.xml"/>
+    <!-- saf服务-->
+    <!--<import resource="spring/spring-config-saf-consumer.xml"/>-->
+    <!-- 启动service层扫描，排除@Controller层，该层交予springmvc扫描-->
+    <context:component-scan base-package="cc.water.ciro">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <!--系统参数配置-->
+    <!--<util:properties id="sysConfigParams" location="classpath:properties/sysconfig.properties" />-->
+    <!-- 读取配置文件 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <!-- jdbc配置 -->
+                <value>classpath:properties/*</value>
+                <!-- memcached配置 -->
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+    <!-- 注册XmlViewResolver，用于iReport & JasperReports报表生成 -->
+    <bean id="jasperReportResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="0"/>
+        <property name="location" value="classpath:spring/spring-jasper-views.xml"/>
+    </bean>
+
+</beans>

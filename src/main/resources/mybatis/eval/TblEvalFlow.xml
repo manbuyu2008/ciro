@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.water.ciro.eval.mapper.EvalFlowDao" >
+  <resultMap id="BaseResultMap" type="cc.water.ciro.eval.domain.EvalFlow" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DETAIL" property="detail" jdbcType="VARCHAR" />
+    <result column="KS_EVAL" property="ksEval" jdbcType="VARCHAR" />
+    <result column="KS_ROLE" property="ksRole" jdbcType="VARCHAR" />
+    <result column="KS_NOTE" property="ksNote" jdbcType="VARCHAR" />
+    <result column="DK_EVAL" property="dkEval" jdbcType="VARCHAR" />
+    <result column="DK_ROLE" property="dkRole" jdbcType="VARCHAR" />
+    <result column="DK_NOTE" property="dkNote" jdbcType="VARCHAR" />
+    <result column="CORP_EVAL" property="corpEval" jdbcType="VARCHAR" />
+    <result column="CORP_ROLE" property="corpRole" jdbcType="VARCHAR" />
+    <result column="CORP_IDS" property="corpIds" jdbcType="VARCHAR" />
+    <result column="CORP_NOTE" property="corpNote" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="BIGINT" />
+    <result column="MENDER" property="mender" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, NAME, DETAIL, KS_EVAL, KS_ROLE, KS_NOTE, DK_EVAL, DK_ROLE, DK_NOTE, CORP_EVAL, 
+    CORP_ROLE, CORP_IDS, CORP_NOTE, REMARK, ADD_TIME, UPDATE_TIME, CREATER, MENDER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cc.water.ciro.eval.domain.EvalFlowExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_eval_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_eval_flow
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_eval_flow
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cc.water.ciro.eval.domain.EvalFlowExample" >
+    delete from tbl_eval_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cc.water.ciro.eval.domain.EvalFlow" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_flow (ID, NAME, DETAIL, 
+      KS_EVAL, KS_ROLE, KS_NOTE, 
+      DK_EVAL, DK_ROLE, DK_NOTE, 
+      CORP_EVAL, CORP_ROLE, CORP_IDS, 
+      CORP_NOTE, REMARK, ADD_TIME, 
+      UPDATE_TIME, CREATER, MENDER
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{ksEval,jdbcType=VARCHAR}, #{ksRole,jdbcType=VARCHAR}, #{ksNote,jdbcType=VARCHAR}, 
+      #{dkEval,jdbcType=VARCHAR}, #{dkRole,jdbcType=VARCHAR}, #{dkNote,jdbcType=VARCHAR}, 
+      #{corpEval,jdbcType=VARCHAR}, #{corpRole,jdbcType=VARCHAR}, #{corpIds,jdbcType=VARCHAR}, 
+      #{corpNote,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=BIGINT}, #{mender,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cc.water.ciro.eval.domain.EvalFlow" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_eval_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="detail != null" >
+        DETAIL,
+      </if>
+      <if test="ksEval != null" >
+        KS_EVAL,
+      </if>
+      <if test="ksRole != null" >
+        KS_ROLE,
+      </if>
+      <if test="ksNote != null" >
+        KS_NOTE,
+      </if>
+      <if test="dkEval != null" >
+        DK_EVAL,
+      </if>
+      <if test="dkRole != null" >
+        DK_ROLE,
+      </if>
+      <if test="dkNote != null" >
+        DK_NOTE,
+      </if>
+      <if test="corpEval != null" >
+        CORP_EVAL,
+      </if>
+      <if test="corpRole != null" >
+        CORP_ROLE,
+      </if>
+      <if test="corpIds != null" >
+        CORP_IDS,
+      </if>
+      <if test="corpNote != null" >
+        CORP_NOTE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="mender != null" >
+        MENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="ksEval != null" >
+        #{ksEval,jdbcType=VARCHAR},
+      </if>
+      <if test="ksRole != null" >
+        #{ksRole,jdbcType=VARCHAR},
+      </if>
+      <if test="ksNote != null" >
+        #{ksNote,jdbcType=VARCHAR},
+      </if>
+      <if test="dkEval != null" >
+        #{dkEval,jdbcType=VARCHAR},
+      </if>
+      <if test="dkRole != null" >
+        #{dkRole,jdbcType=VARCHAR},
+      </if>
+      <if test="dkNote != null" >
+        #{dkNote,jdbcType=VARCHAR},
+      </if>
+      <if test="corpEval != null" >
+        #{corpEval,jdbcType=VARCHAR},
+      </if>
+      <if test="corpRole != null" >
+        #{corpRole,jdbcType=VARCHAR},
+      </if>
+      <if test="corpIds != null" >
+        #{corpIds,jdbcType=VARCHAR},
+      </if>
+      <if test="corpNote != null" >
+        #{corpNote,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        #{mender,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cc.water.ciro.eval.domain.EvalFlowExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_eval_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_eval_flow
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null" >
+        DETAIL = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksEval != null" >
+        KS_EVAL = #{record.ksEval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksRole != null" >
+        KS_ROLE = #{record.ksRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksNote != null" >
+        KS_NOTE = #{record.ksNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkEval != null" >
+        DK_EVAL = #{record.dkEval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkRole != null" >
+        DK_ROLE = #{record.dkRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dkNote != null" >
+        DK_NOTE = #{record.dkNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpEval != null" >
+        CORP_EVAL = #{record.corpEval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpRole != null" >
+        CORP_ROLE = #{record.corpRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpIds != null" >
+        CORP_IDS = #{record.corpIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpNote != null" >
+        CORP_NOTE = #{record.corpNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null" >
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=BIGINT},
+      </if>
+      <if test="record.mender != null" >
+        MENDER = #{record.mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_eval_flow
+    set ID = #{record.id,jdbcType=BIGINT},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      DETAIL = #{record.detail,jdbcType=VARCHAR},
+      KS_EVAL = #{record.ksEval,jdbcType=VARCHAR},
+      KS_ROLE = #{record.ksRole,jdbcType=VARCHAR},
+      KS_NOTE = #{record.ksNote,jdbcType=VARCHAR},
+      DK_EVAL = #{record.dkEval,jdbcType=VARCHAR},
+      DK_ROLE = #{record.dkRole,jdbcType=VARCHAR},
+      DK_NOTE = #{record.dkNote,jdbcType=VARCHAR},
+      CORP_EVAL = #{record.corpEval,jdbcType=VARCHAR},
+      CORP_ROLE = #{record.corpRole,jdbcType=VARCHAR},
+      CORP_IDS = #{record.corpIds,jdbcType=VARCHAR},
+      CORP_NOTE = #{record.corpNote,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{record.creater,jdbcType=BIGINT},
+      MENDER = #{record.mender,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.water.ciro.eval.domain.EvalFlow" >
+    update tbl_eval_flow
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        DETAIL = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="ksEval != null" >
+        KS_EVAL = #{ksEval,jdbcType=VARCHAR},
+      </if>
+      <if test="ksRole != null" >
+        KS_ROLE = #{ksRole,jdbcType=VARCHAR},
+      </if>
+      <if test="ksNote != null" >
+        KS_NOTE = #{ksNote,jdbcType=VARCHAR},
+      </if>
+      <if test="dkEval != null" >
+        DK_EVAL = #{dkEval,jdbcType=VARCHAR},
+      </if>
+      <if test="dkRole != null" >
+        DK_ROLE = #{dkRole,jdbcType=VARCHAR},
+      </if>
+      <if test="dkNote != null" >
+        DK_NOTE = #{dkNote,jdbcType=VARCHAR},
+      </if>
+      <if test="corpEval != null" >
+        CORP_EVAL = #{corpEval,jdbcType=VARCHAR},
+      </if>
+      <if test="corpRole != null" >
+        CORP_ROLE = #{corpRole,jdbcType=VARCHAR},
+      </if>
+      <if test="corpIds != null" >
+        CORP_IDS = #{corpIds,jdbcType=VARCHAR},
+      </if>
+      <if test="corpNote != null" >
+        CORP_NOTE = #{corpNote,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=BIGINT},
+      </if>
+      <if test="mender != null" >
+        MENDER = #{mender,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.water.ciro.eval.domain.EvalFlow" >
+    update tbl_eval_flow
+    set NAME = #{name,jdbcType=VARCHAR},
+      DETAIL = #{detail,jdbcType=VARCHAR},
+      KS_EVAL = #{ksEval,jdbcType=VARCHAR},
+      KS_ROLE = #{ksRole,jdbcType=VARCHAR},
+      KS_NOTE = #{ksNote,jdbcType=VARCHAR},
+      DK_EVAL = #{dkEval,jdbcType=VARCHAR},
+      DK_ROLE = #{dkRole,jdbcType=VARCHAR},
+      DK_NOTE = #{dkNote,jdbcType=VARCHAR},
+      CORP_EVAL = #{corpEval,jdbcType=VARCHAR},
+      CORP_ROLE = #{corpRole,jdbcType=VARCHAR},
+      CORP_IDS = #{corpIds,jdbcType=VARCHAR},
+      CORP_NOTE = #{corpNote,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=BIGINT},
+      MENDER = #{mender,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findRowNo" parameterType="EvalFlowQuery" resultType="Integer">
+    SELECT TT.rownum FROM (
+    SELECT @rownum:=@rownum+1 rownum, id FROM
+    (SELECT @rownum:=0,u.id FROM tbl_eval_flow U WHERE 1=1
+    <trim  suffixOverrides="AND | OR">
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY U.code,U.id
+      </if>
+      ) XXX_T
+      ) TT WHERE 1=1
+      <if test="id != null and id !=''">
+        and  TT.id=#{id}
+      </if>
+      <if test="ids != null ">
+        AND id in
+        <foreach collection="ids" item="i_id" index="i_num"  open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      limit 1
+    </trim>
+  </select>
+
+  <select id="findListNum" parameterType="EvalFlowQuery" resultType="Integer">
+    select count(1) num from tbl_eval_flow U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.ADD_TIME DESC ,U.name,U.id
+      </if>
+    </trim>
+  </select>
+
+  <select id="findList" parameterType="EvalFlowQuery" resultMap="BaseResultMap">
+    select U.* from tbl_eval_flow U
+    WHERE 1=1
+    <trim suffixOverrides="AND | OR">
+      <if test="ids != null ">
+        AND U.id in
+        <foreach collection="ids" item="i_id" index="i_num" open="(" separator="," close=")">
+          #{i_id}
+        </foreach>
+      </if>
+      <if test="name != null and name !=''">
+        AND U.name like  CONCAT('%',#{name},'%')
+      </if>
+      <if test="_sql != null and _sql !=''">
+        ${_sql}
+      </if>
+      <if test="_list != null">
+        <foreach collection="_list" item="listMap" index="i_num" open="and (" separator=" OR " close=" ) ">
+          (upper(F_PINYIN(u.${listMap.text})) like CONCAT('%',#{listMap.value},'%')
+          or upper(u.${listMap.text}) like CONCAT('%',#{listMap.value},'%'))
+        </foreach>
+      </if>
+      <if test="strOrder != null and strOrder !=''">
+        ORDER BY ${strOrder}
+      </if>
+      <if test="strOrder == null || strOrder ==''">
+        ORDER BY u.ADD_TIME DESC ,U.name,U.id
+      </if>
+      <if test="pageSize != null and pageSize !='' ">
+        <if test="startRow != null">
+          limit ${startRow}, ${pageSize}
+        </if>
+        <if test="startRow == null">
+          limit ${pageSize}
+        </if>
+      </if>
+    </trim>
+  </select>
+  
+</mapper>
