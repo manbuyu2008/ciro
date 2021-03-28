@@ -1,0 +1,776 @@
+﻿input[type="checkbox"] {
+    vertical-align: middle;
+}
+
+.coco_toolbar {
+    height: 35px;
+    width: 100%;
+    font-size: 12px;
+    background: #efefef;
+    overflow: hidden;
+    border: 0;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.coco_loading {
+    position: absolute;
+    cursor: wait;
+    left: 10px;
+    top: 10px;
+    width: 99%;
+    height: 20px;
+    padding: 10px 5px 10px 30px;
+    background: #fff url('images/easyui/pagination_loading.gif') no-repeat scroll 5px 10px;
+    border: 1px solid #ccc;
+    color: #000;
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+A.coco_menu {
+    font-size: 10pt;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+A.coco_menu, A.coco_opt:link {
+    color: green;
+}
+
+A.coco_menu, A.coco_opt:visited {
+    color: green;
+}
+
+A.coco_menu, A.coco_opt:hover {
+    color: blue;
+}
+
+A.coco_menu, A.coco_opt:active {
+    color: #000;
+}
+
+A.coco_opt {
+    font-size: 9pt;
+    text-decoration: none;
+    cursor: pointer;
+    color: #00f;
+}
+
+A.coco_opt:link, A.coco_txt:link {
+    color: #295581;
+}
+
+A.coco_opt:visited, A.coco_txt:visited {
+    color: #295581;
+}
+
+A.coco_opt:hover, A.coco_txt:hover {
+    color: #EE6600;
+}
+
+A.coco_opt:active, A.coco_txt:active {
+    color: #295581;
+}
+
+.p_tbl {
+    width: 99%;
+}
+
+.p_tr {
+    background-color:#CACACA;
+    font-size: 9pt;
+    height: 28px;
+}
+
+.p_tr_lst_head {
+    background-color: #EEE;
+    text-align: center;
+    height: 18pt;
+    width: 100%;
+    font-size: 9pt;
+}
+
+.p_tbl td{
+	height: 28px;
+   line-height: 28px;
+}
+
+.p_td_lbl {
+    text-align: right;
+    vertical-align: middle;
+    /*background-color: #CACACA;*/
+    /*background:url("./easyui/images/datagrid_header_bg.gif") repeat-x scroll left bottom #FAFAFA;*/
+    font-size: 9pt;
+    color: #000000;
+    width: 10%;
+    padding-right: 8px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.p_td_lbl2 {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 9pt;
+    padding-right: 8px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.p_td_ellipsis {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    word-break:keep-all;
+}
+
+.p_tr input {
+    /*border: 1px solid #BBC3CE;*/
+}
+
+.p_tr textarea {
+    border: 1px #BBC3CE solid;
+    overflow-y: auto;
+    padding: 2px;
+    vertical-align: middle;
+    line-height: 15px;
+    color: #333333;
+    /*background: url("./themes/erp-blue/images/input.png") no-repeat scroll left top transparent;*/
+    font-size: 12px;
+}
+
+.coco_txt {
+    font-size: 9pt;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.coco_txt_12 {
+    font-size: 12pt;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.coco_caption {
+    font-size: 9pt;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    padding-left: 10px;
+    background: url('easyui/images/panel_title.gif') repeat-x;
+}
+
+.coco_text {
+    font-size: 9pt;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    /*padding: 1px;*/
+    border: 1px solid #A2A4BB;
+    background-color: white;
+}
+
+.coco_text.blur {
+    background-color: white;
+}
+
+.coco_text.focus {
+    background-color: #DFD;
+}
+
+.coco_text.must {
+    background-color: #ffffe0;
+}
+
+.coco_text.readonly {
+    background-color: #dcdcdc;
+}
+
+.coco_link a {
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.coco_link a:link {
+    color: green;
+}
+
+.coco_link a:visited {
+    color: green;
+}
+
+.coco_link a:hover {
+    color: blue;
+}
+
+.coco_link a:active {
+    color: green;
+}
+
+.coco_input {
+    width: 182px;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #BBC3CE;
+    line-height: 18px;
+    height: 18px;
+    color: #333333;
+    background: url("images/input.png") no-repeat scroll left top transparent;
+}
+
+.coco_readonly {
+    background: transparent;
+    background-color: #F3F3F4;
+}
+
+.coco_input_100 {
+    width: 99%;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #BBC3CE;
+    line-height: 24px;
+    height: 24px;
+    color: #333333;
+    background: url("images/input.png") no-repeat scroll left top transparent;
+}
+
+.coco_input_50 {
+    width: 50%;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #BBC3CE;
+    line-height: 24px;
+    height: 24px;
+    color: #333333;
+    background: url("images/input.png") no-repeat scroll left top transparent;
+}
+
+.coco_input_20 {
+    width: 20%;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #BBC3CE;
+    line-height: 24px;
+    height: 24px;
+    color: #333333;
+    background: url("images/input.png") no-repeat scroll left top transparent;
+}
+
+.readonly{
+    background-color: #f5f5f5;
+    readonly:expression(this.readOnly=true); /*仅能适用于IE*/
+}
+.split {
+    height: 100%;
+    vertical-align: top;
+    color: #A0A0A0;
+    padding-top: 2px;
+    font-size: 18px;
+}
+
+.icon-blank {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -330px;
+    height: 1px;
+    padding-left: 3px;
+}
+
+.icon-add {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -825px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-edit {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -553px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-view {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -665px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-remove {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -873px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-save {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -905px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-list {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1081px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-list2 {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1129px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-module {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -505px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-user-register {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -681px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-user-exit {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -633px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-xls {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -649px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-saveadd {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -425px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-submit {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -521px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-savesubmit {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -409px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-cancel {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1001px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-disuse {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -841px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-flow {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1177px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-history {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1225px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-reload {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -377px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-search {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -568px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-print {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -537px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-cut {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -857px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-ok {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -473px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-no {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -489px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-help {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1241px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-undo {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -601px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-redo {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -521px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-back {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -969px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-sum {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -777px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-folder {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1257px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-file {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -921px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-start {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -697px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-stop {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -745px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-care {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1049px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-uncare {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -617px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-claim {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1033px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-reject {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -457px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-retake {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -393px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-claimandsubmit {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1017px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-upload {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -585px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-sign {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -713px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-comment {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -937px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-brokenLine {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -953px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-line {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1145px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-judgment {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1097px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-ParallelGateway {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1082px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-activity {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -889px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-select {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -729px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-layout-1 {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1209px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-layout-2 {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1065px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-layout-3 {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1113px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+.icon-layout-4 {
+    background: url('images/easyui/_all_img.png') no-repeat 0 -1161px;
+    height: 16px;
+    padding-left: 18px;
+}
+
+/*新单据div布局*/
+.div-table-1, .div-table-2,.div-table-3 {
+    clear:left;
+    margin:7px 0 0 0;
+    padding:1px;
+    width:100%;
+    list-style-type:none;
+}
+.div-table-1 li {
+    width: 99%;
+}
+.div-table-2 li {
+    width: 49%;
+}
+.div-table-3 li {
+    width: 33%;
+}
+
+.div-table-cell {
+    float: left;
+    /*border:1px solid #dedede;*/
+    margin: 0;
+    padding: 0;
+    display: block;
+
+    background-color: white;
+    font-size: 9pt;
+    height: 28px;
+    vertical-align: middle;
+}
+
+.div-table-cell label {
+    /*background-color: #F3F3F4;*/
+    /*background:url("./easyui/images/datagrid_header_bg.gif") repeat-x scroll left bottom #FAFAFA;*/
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 9pt;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    width: 110px;
+    height: 100%;
+    margin: 0;
+    padding: 2px 0 0 0;
+    padding-right: 8px;
+}
+
+.div-table-cell div {
+    background-color: #ffffff;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 9pt;
+    text-align: left;
+    vertical-align: middle;
+    float: left;
+    margin: 0;
+    height: 100%;
+    border: 0;
+}
+
+.div-table-cell div input {
+    border: 1px #BBC3CE solid;
+}
+
+.div-table-cell div .combo{
+   background: url("images/input.png") no-repeat scroll left top transparent;
+	border: 1px #BBC3CE solid;
+}
+
+.div-table-cell div .combo input{
+	border: none;
+	background: transparent;
+}
+
+.div-table-cell div textarea {
+    border: 1px #BBC3CE solid;
+    overflow-y: auto;
+    width: 99%;
+    font-size: 12px;
+}
+
+/* huangchun */
+div.tabscontent{
+    overflow: auto;
+    height: auto;
+    min-height: 100px;
+    margin: 5px 0 5px 0;
+    padding: 5px;
+}
+
+div.tabscontent dl{
+
+}
+
+div.tabscontent dl dd{
+    width: 300px;
+    margin: 3px 0 3px 80px;
+    float: left;
+}
+
+div.tabscontent dl dd, div.tabscontent dl dd p{
+    position: relative;
+}
+
+div.tabscontent .p_tbl td label, div.tabscontent .p_tbl td p.text{
+	float: left;
+}
+
+div.tabscontent .p_tbl td label{
+    display: inline-block;
+    float: left;
+    line-height: 22px;
+    color: #666666;
+    margin: 0 3px 0 3px;
+    text-align: right;
+    position: absolute;
+}
+
+.p_tbl td p.text{
+	margin: 0 3px 0 3px;
+}
+
+/*.p_tbl td span.combo, dl.login dd span.combo, li.div-table-cell span.combo, div.datagrid-cell span.combo, #span_userScheme span.combo{*/
+    /*padding: 2px;*/
+    /**padding: 2px 0 0 0;*/
+    /*vertical-align: middle;*/
+    /*border: 1px solid #BBC3CE;*/
+    /*height: 20px;*/
+    /**height: 14px;*/
+    /*color: #333333;*/
+    /*background: url("images/input.png") no-repeat scroll left top transparent;*/
+/*}*/
+
+.p_tbl td span.combo span, dl.login dd span.combo span, li.div-table-cell span.combo span, div.datagrid-cell span.combo span, #span_userScheme span.combo span{
+	*border: none;
+}
+
+.p_tbl td span.combo input, dl.login dd span.combo input, li.div-table-cell span.combo input, div.datagrid-cell span.combo input, #span_userScheme span.combo input{
+	display: block;
+	float: left;
+	padding: 0;
+	*padding: 0 2px 0 2px;
+	*margin: 0;
+	height: 18px;
+	*height: 19px;
+	line-height: 16px;
+	*line-height: 17px;
+	vertical-align: middle;
+}
+
+.p_tbl td span.combo span span.combo-arrow, dl.login dd span.combo span span.combo-arrow, li.div-table-cell span.combo span span.combo-arrow, div.datagrid-cell span.combo span span.combo-arrow, #span_userScheme span.combo span span.combo-arrow{
+	display: block;
+	float: left;
+	width: 20px;
+	*width: 18px;
+	*margin-top: 1px;
+	/*background: url("images/ico.png") no-repeat -125px top;*/
+}
+
+/*.p_tbl td span.datebox span span.combo-arrow, dl.login dd span.datebox span span.combo-arrow, li.div-table-cell span.datebox span span.combo-arrow, div.datagrid-cell span.datebox span span.combo-arrow, #span_userScheme span.datebox span span.combo-arrow{*/
+	/*background: url("images/ico.png") no-repeat -41px top;*/
+/*}*/
+
+
+div.tabscontent dl dd label.link{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.coco_txt{
+	
+}
+
+div.coco_txt li{
+	height: 24px;
+	line-height: 24px;
+}
+
+div.coco_txt li a:link, div.coco_txt li a:visited, div.coco_txt li a:active{
+	margin-left: 10px;
+	color: #295581;
+}
+
+div.coco_txt li a:hover{
+	color: #EE6600;
+}
+
+.required {
+    color: red;
+}

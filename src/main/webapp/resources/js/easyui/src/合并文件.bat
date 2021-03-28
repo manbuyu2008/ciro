@@ -1,0 +1,4 @@
+rem @ jquery.datetimebox.js
+del ..\jquery.easyui.1.3.src.js
+type jquery.navs.js jquery.hotkeys.js jquery.draggable.js jquery.droppable.js jquery.resizable.js jquery.linkbutton.js jquery.pagination.js jquery.tree.js jquery.parser.js jquery.progressbar.js jquery.panel.js jquery.window.js jquery.dialog.js jquery.messager.js jquery.accordion.js jquery.tabs.js jquery.layout.js jquery.menu.js jquery.menubutton.js jquery.splitbutton.js jquery.searchbox.js jquery.validatebox.js jquery.form.js jquery.numberbox.js jquery.calendar.js jquery.spinner.js jquery.numberspinner.js jquery.timespinner.js jquery.datagrid.js jquery.propertygrid.js jquery.treegrid.js jquery.combo.js jquery.combobox.js jquery.combotree.js jquery.combogrid.js jquery.datebox.js jquery.datetimebox.js jquery.slider.js jquery.portal.js jquery.portlet.js jquery.tooltip.js>> ..\jquery.easyui.1.3.src.js
+pause

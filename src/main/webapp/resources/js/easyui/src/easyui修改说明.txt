@@ -1,0 +1,414 @@
+1、combo默认宽度为input的宽度。
+$.fn.combo = function(options, param){
+		if (typeof options == 'string'){
+			return $.fn.combo.methods[options](this, param);
+		}
+
+		options = options || {};
+		return this.each(function(){
+			var state = $.data(this, 'combo');
+            /*zhenggm 默认宽度为input的宽度*/
+            if (!options.width || options.width == 'auto') {
+                options.width=$(this).outerWidth();
+            }
+        ....
+2、combotree增加onBeforeClick事件
+        onClick: function(node){
+        /*zhenggm 增加beforeclick事件*/
+        if (opts.onBeforeClick && !opts.onBeforeClick.call(this,node)) return;
+        ...
+
+3、datagrid增加onBeforeSelectPage事件，外部控制是否允许换页
+function buildGrid(target) {
+        ...
+        if (opts.pagination) {
+            var pager = $('<div class="datagrid-pager"></div>').appendTo(panel);
+            pager.pagination({
+                pageNumber:opts.pageNumber,
+                pageSize:opts.pageSize,
+                pageList:opts.pageList,
+                onSelectPage:function (pageNum, pageSize) {
+                    /*zhenggm：增加切换页事件*/
+                    if (opts.onBeforeSelectPage && !opts.onBeforeSelectPage()) return;
+                    // save the page state
+                    opts.pageNumber = pageNum;
+                    opts.pageSize = pageSize;
+
+                    request(target);	// request new page data
+                }
+            });
+          ....
+}
+
+4、datagrid：列标题默认居中
+function createColumnHeader(container, columns, frozen) {
+     cell.css('text-align', (col.align || 'left'));
+===>>>
+     cell.css('text-align', 'center');
+
+5、datagrid：修正bug：排序字段为空时，直接返回
+     function getColumnOption(target, field) {
+             /*zhenggm：排序字段为空时，直接返回*/
+             if (!field) return undefined;
+             /*end*/
+
+6、datagrid：endEdit时不再校验，外部自行校验
+function endEdit(target, index, cancel) {
+             ...
+        if (!cancel) {
+            /*zhenggm:endEdit时不再校验，外部自行校验*/
+            //if (!validateRow(target, index)) return;	// invalid row data
+            /*end*/
+            var changed = false;
+.....
+}
+
+7、datagrid：editor修改：
+  a、input绑定click和change事件，方便前端自动计算列的计算
+  b、editor增加setEnabled方法
+增加方法：
+    function bindEvent(obj, opt) {
+            if (!opt) return;
+            if (opt.click) obj.click(opt.click);
+            if (opt.change) obj.change(opt.change);
+        }
+修改：
+    var editors = {
+        text:{
+            init:function (container, options) {
+                var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container);
+                bindEvent(input, options);
+                if (options && options.disabled) input.attr("disabled", true);
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                $(target).attr("disabled", !e);
+            }
+        },
+        textarea:{
+            init:function (container, options) {
+                var input = $('<textarea class="datagrid-editable-input"></textarea>').appendTo(container);
+                bindEvent(input, options);
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                $(target).attr("disabled", !e);
+            }
+        },
+        checkbox:{
+            init:function (container, options) {
+                var input = $('<input type="checkbox">').appendTo(container);
+                input.val(options.on);
+                input.attr('offval', options.off);
+                bindEvent(input, options);
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                $(target).attr("disabled", !e);
+            }
+        },
+        numberbox:{
+            init:function (container, options) {
+                var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container);
+                input.numberbox(options);
+                /*change时及时赋值，避免input和number的value不同*/
+                if (options && options.change) {
+                    input.change(function () {
+                        $(this).numberbox("setValue", $(this).val());
+                        options.change.call(this);
+                    });
+                }
+
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                $(target).attr("disabled", !e);
+            }
+        },
+        validatebox:{
+            init:function (container, options) {
+                var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container);
+                input.validatebox(options);
+                bindEvent(input, options);
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                $(target).attr("disabled", !e);
+            }
+        },
+        datebox:{
+            init:function (container, options) {
+                var input = $('<input type="text">').appendTo(container);
+                input.datebox(options);
+                bindEvent(input, options);
+                return input;
+            },
+            ...
+            setEnabled:function (target, e) {
+                if (e) $(target).datebox("enable");
+                else $(target).datebox("disable");
+            }
+        },
+        combobox:{
+            init:function (container, options) {
+                var combo = $('<input type="text">').appendTo(container);
+                combo.combobox(options || {});
+                return combo;
+            },
+            ...
+            setEnabled:function (target, e) {
+                if (e) $(target).combobox("enable");
+                else $(target).combobox("disable");
+            }
+        },
+        combotree:{
+            init:function (container, options) {
+                var combo = $('<input type="text">').appendTo(container);
+                combo.combotree(options);
+                return combo;
+            },
+            ...
+            setEnabled:function (target, e) {
+                if (e) $(target).combotree("enable");
+                else $(target).combotree("disable");
+            }
+        }
+    };
+
+8、datagrid：增加返回toolbar的方法
+        getPager:function (jq) {
+            return $.data(jq[0], 'datagrid').panel.find('div.datagrid-pager');
+        },
+        getToolbar:function (jq) {//zhenggm 增加返回toolbar的方法
+            return $.data(jq[0], "datagrid").panel.find("div.datagrid-toolbar");
+        },
+
+9、messager：隐藏时去掉效果
+                onBeforeClose: function(){
+					hide(this, opts.showType, opts.showSpeed)
+					===>
+					hide(this); /*zhenggm：去掉效果, opts.showType, opts.showSpeed*/
+
+					return false;
+				}
+10、numberbox：input获得焦点时，去掉金额格式化信息
+   增加方法
+       function focus(target) {
+           var opts = $.data(target, "numberbox").options;
+           var val = $(target).val() + "";
+           if (opts.onGetValue)  val = opts.onGetValue(val, opts.precision);
+           else {
+               val = val.toDouble(opts.precision);
+           }
+           $(target).val(val);
+           $.data(target, "numberbox").field.val(val);
+           $(target).select();
+       }
+   绑定事件处修改（增加调用）：
+       .bind('focus.numberbox', function () {
+                           focus(target);//
+                           var vv = getValue(target);
+                           if ($(this).val() != vv) {
+                               $(this).val(vv);
+                           }
+                       });
+
+11、pagination：增加换页前事件 onBeforeSelectPage
+   function selectPage(target, page){
+   		var opts = $.data(target, 'pagination').options;
+   		var pageCount = Math.ceil(opts.total/opts.pageSize) || 1;
+   		var pageNumber = page;
+   		if (page < 1) pageNumber = 1;
+   		if (page > pageCount) pageNumber = pageCount;
+           /*zhenggm：增加切换页事件*/
+           if(opts.onBeforeSelectPage && !opts.onBeforeSelectPage()) return;
+   		opts.pageNumber = pageNumber;
+   		opts.onSelectPage.call(target, pageNumber, opts.pageSize);
+   		showInfo(target);
+   	}
+
+12、validatebox：提示信息超出屏幕区域，则处理tip的显示位置
+function showTip(target){
+.....
+   tip.find('.validatebox-tip-content').html(msg);
+           /*zhenggm：提示超出屏幕，处理下位置*/
+   		/*tip.css({
+   			display:'block',
+   			left:box.offset().left + box.outerWidth(),
+   			top:box.offset().top
+   		})*/
+           var x=box.offset().left + box.outerWidth(), y = box.offset().top;
+           if (x + tip.outerWidth() > document.body.offsetWidth) {
+               x = box.offset().left;
+               y = box.offset().top + box.outerHeight();
+               if (y + tip.outerHeight() > document.body.offsetHeight - 20) y = box.offset().top - box.outerHeight();
+           }
+           tip.css({display:"block", left:x, top:y});
+}
+
+13、combo：修正IE下的bug：设置宽度无效
+function setSize(target, width){
+...
+
+//zhenggm:修正IE下的bug，子宽度超长，下一句父宽度会设置无效
+                 var ct = combo.find('input.combo-text');
+                 if (!$.boxModel && $.browser.msie) ct.width(opts.width - arrowWidth);
+         		combo._outerWidth(opts.width);
+         		ct.width(combo.width() - arrowWidth);
+
+14、去掉多余的 _outerWidth和_outerHeight定义
+保留progressbar中定义，progressbar增加 _outerHeight定义，删除：panel、menu、calendar、spinner、slider中定义
+
+15、datagrid：增加onBeforeBind方法，数据加载成功后绑定前执行
+function loadData(target, data) {
+        var opts = $.data(target, 'datagrid').options;
+        var dc = $.data(target, 'datagrid').dc;
+        var wrap = $.data(target, 'datagrid').panel;
+        var selectedRows = $.data(target, 'datagrid').selectedRows;
+        data = opts.loadFilter.call(target, data);
+        //zhenggm 增加onBeforeBind方法，数据加载成功后绑定前
+        if (opts.onBeforeBind) opts.onBeforeBind.call(target, data);
+   ..............
+
+16、layout：当panell不允许收缩时，去掉收缩按钮
+function addPanel(container, param){
+   原：
+   pp.panel($.extend({},{
+     			width: (pp.length ? parseInt(pp[0].style.width) || pp.outerWidth() : 'auto'),
+     			height: (pp.length ? parseInt(pp[0].style.height) || pp.outerHeight() : 'auto'),
+     			split: (pp.attr('split') ? pp.attr('split') == 'true' : undefined),
+     			doSize: false,
+     			cls: ('layout-panel layout-panel-' + dir),
+     			bodyCls: 'layout-body',
+     			onOpen: function(){
+     				var buttonDir = {north:'up',south:'down',east:'right',west:'left'};
+     				if (!buttonDir[dir]) return;
+
+     				var iconCls = 'layout--' + buttonDir[dir];
+
+     				// add collapse tool to panel header
+     				var tool = $(this).panel('header').children('div.panel-tool');
+     				if (!tool.children('a.' + iconCls).length){
+     					var t = $('<a href="javascript:void(0)"></a>').addClass(iconCls).appendTo(tool);
+     					t.bind('click', {dir:dir}, function(e){
+     						collapsePanel(container, e.data.dir);
+     						return false;
+     					});
+     				}
+     			}
+     		}, param));
+
+   修改后：
+   //zhenggm 当panell不允许收缩时，去掉收缩按钮
+           var opt = $.extend({}, {
+               width:(pp.length ? parseInt(pp[0].style.width) || pp.outerWidth() : 'auto'),
+               height:(pp.length ? parseInt(pp[0].style.height) || pp.outerHeight() : 'auto'),
+               split:(pp.attr('split') ? pp.attr('split') == 'true' : undefined),
+               doSize:false,
+               cls:('layout-panel layout-panel-' + dir),
+               bodyCls:'layout-body'
+           }, param);
+           if (param.collapsible) opt.onOpen = function () {
+               var buttonDir = {north:'up', south:'down', east:'right', west:'left'};
+               if (!buttonDir[dir]) return;
+
+               var iconCls = 'layout--' + buttonDir[dir];
+
+               // add collapse tool to panel header
+               var tool = $(this).panel('header').children('div.panel-tool');
+               if (!tool.children('a.' + iconCls).length) {
+                   var t = $('<a href="javascript:void(0)"></a>').addClass(iconCls).appendTo(tool);
+                   t.bind('click', {dir:dir}, function (e) {
+                       collapsePanel(container, e.data.dir);
+                       return false;
+                   });
+               }
+           };
+           pp.panel(opt);
+
+17、datagrid：本地排序bug,column的option定义增加number属性，定义是否数字
+  loaddata::::
+    原：var sortFunc = opt.sorter || function (a, b) {
+                          return (a > b ? 1 : -1);
+                      };
+    修改后：var sortFunc = opt.sorter || function (a, b) {
+                            a = (a + "");
+                            b = (b + "");
+                            if (opt.number) {
+                                a = a.toDouble();
+                                b = b.toDouble();
+                                return (a > b ? 1 : -1);
+                            }
+                            return a.localeCompare(b);
+                        };
+
+18、tree：修正bug：主菜单点击系统，动态创建树。点击过快，前一颗树未渲染完，会报错。修正
+function showLines(target, ul, called) {
+原：
+  		var opts = $.data(target, 'tree').options;
+  		if (!opts.lines) return;
+修改后
+        var opts = $.data(target, 'tree');
+        if (!opts) return;
+        opts = opts.options;
+        if (!opts.lines) return;
+
+19、pageination：beforePageText为空，则不加此td；页码input宽度设为30px;无displayMsg，不增加对应的div
+20、form：不校验disabled或hidden的控件
+function validate(target){
+		if ($.fn.validatebox){
+			var box = $('.validatebox-text:enabled:visible', target);
+
+21:datagrid:增加方法：getColsWidth，获取列宽，返回json对象，格式： {field1: 80, field2:120}
+
+22:datagrid和pagination增加getPageCount方法，获取总页数
+23:datagrid增加方法setEditor，动态改变某列的编辑方式。调用示例：
+$("#tbmain").datagrid("setEditor", {field:"F_CHANGE_AFTER_VALUE", editor:"asset"});
+24:combo系列，下拉panel延迟加载
+25：panel：对话框如果超出当前窗口，则自动最大化
+26：优化：修改不合理写法：
+   1、原同一个方法中获取$.data(..)等用变量保存，避免重复去取，可传则传参
+   2、for循环优化
+27:datagrid、增加fixColumnTitle方法，动态修改列名。参数可以为数组或单个对象
+       $("#tbmain").datagrid("fixColumnTitle", [{field:"F_CODE", title:"aaa"},
+               {field:"F_NAME", title:"bbb"}]);
+
+28:增加jquery.portal.js jquery.portlet.js
+
+29:validatebox增加事件customValid，用于自定义校验方法。如：
+   customValid: function(value) {
+      if (!value) return "不能为空!";
+   }
+
+30:datagrid:
+   增加属性readonly，修改了编辑方式
+
+31:pagination 增加属性：
+showLast: opts.pageShowLast,//是否显示最后一页的按钮
+readonly: opts.pageReadonly//页码框是否只读
+
+32：datagrid增加属性，对应pagination
+   pageShowRefresh: false,//分页栏是否显示刷新按钮
+   pageShowLast: false,//分页栏是否显示“最后一页”按钮
+   pageReadonly: true,//分页栏页码是否只读
+33:datagrid优化，处于编辑状态时，可在文档任意位置点击结束编辑
+34:下拉控件支持模糊搜索，combogrid中ctrl+左右箭头可翻页，combotree中ctrl+左右箭头可收缩/展开树节点；下拉未展开时点下箭头，展开下拉
+35：datagrid的checkbox列，支持格式化方法checkFormatter，返回值及默认值如下：
+{
+    visible: true,//是否显示checkbox
+    checked: false,//选中
+    enabled: true//可用
+}
+如：{field:'ck',checkbox:true, checkFormatter: function(value, rowData, rowIndex){
+	                	var ret = {};
+	                    var code = rowData['code'];
+	                    if (code <= '003') ret.visible = false;
+	                    else if (code <= '006') ret.enabled = false;
+	                    if (code <= '005') ret.checked = true;
+	                    return ret;
+	                }}
