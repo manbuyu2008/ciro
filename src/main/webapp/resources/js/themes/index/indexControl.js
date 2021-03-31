@@ -74,7 +74,6 @@ function serverLogin() {
 }
 
 $(function () {
-
     var selfPanel =  $("#selfPanel").panel({
         height: 300,
         fit: false,
