@@ -66,7 +66,7 @@
                 if (state.donotFired) return;
                 state.remainText = false;
                 var opts = state.options;
-                /*zhenggm 增加beforeclick事件*/
+                /*huangxl 增加beforeclick事件*/
                 if (opts.onBeforeClick && !opts.onBeforeClick.call(target, node)) return;
                 retrieveValues(target);
                 var $target = $(target);

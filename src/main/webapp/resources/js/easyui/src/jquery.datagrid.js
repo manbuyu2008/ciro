@@ -478,7 +478,7 @@
                     var target = $('#' + $(this).attr('parentId'))[0];
                     var state = $.data(target, 'datagrid');
                     var opts = state.options;
-                    /*zhenggm：增加切换页事件*/
+                    /*huangxl：增加切换页事件*/
                     if (opts.onBeforeSelectPage && !opts.onBeforeSelectPage(pageNum,pageSize)) return;
 
                     //正在编辑中，不允许翻页
@@ -626,7 +626,7 @@
 
 
                         cell.css('text-align', 'center');
-                        /*zhenggm：标题默认居中 (col.align || 'left')*/
+                        /*huangxl：标题默认居中 (col.align || 'left')*/
 
                         // define the cell class and selector
                         col.cellClass = 'datagrid-cell-c' + DATAGRID_SERNO + '-' + col.field.replace('.', '-');
@@ -1309,7 +1309,7 @@
     }
 
     function getColumnOption(target, field, state) {
-        /*zhenggm：排序字段为空时，直接返回*/
+        /*huangxl：排序字段为空时，直接返回*/
         if (!field) return undefined;
         /*end*/
         function find(columns) {
@@ -1403,13 +1403,13 @@
         if (data.footer) {
             state.footer = data.footer;
         }
-        //zhenggm 增加onBeforeBind方法，数据加载成功后绑定前
+        //huangxl 增加onBeforeBind方法，数据加载成功后绑定前
         if (opts.onBeforeBind) opts.onBeforeBind.call(target, data);
 
         if (!opts.remoteSort) {
             var opt = getColumnOption(target, opts.sortName, state);
             if (opt) {
-                //zhenggm：col.option增加number属性，确定是否数字
+                //huangxl：col.option增加number属性，确定是否数字
                 var sortFunc = opt.sorter || function (a, b) {
                     a = a + "";
                     b = b + "";
@@ -1777,7 +1777,7 @@
         var row = opts.finder.getRow(target, index, state);
 
         if (!cancel) {
-            ///*zhenggm:endEdit时不再校验，外部自行校验*/
+            ///*huangxl:endEdit时不再校验，外部自行校验*/
             if (!validateRow(target)) return;	// invalid row data
             /*end*/
             var changed = false;
@@ -2355,7 +2355,7 @@
         });
     };
 
-    /*zhenggm editor的input绑定click和change事件，方便前端自动计算列的计算*/
+    /*huangxl editor的input绑定click和change事件，方便前端自动计算列的计算*/
     function bindEvent(obj, opt) {
         if (!opt) return;
         if (opt.click) obj.click(opt.click);
@@ -2670,7 +2670,7 @@
         getPager: function (jq) {
             return getPager(jq[0]);
         },
-        getToolbar: function (jq) {//zhenggm 增加返回toolbar的方法
+        getToolbar: function (jq) {//huangxl 增加返回toolbar的方法
             return $.data(jq[0], "datagrid").panel.find("div.datagrid-toolbar");
         },
         getColumnFields: function (jq, frozen) {

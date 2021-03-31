@@ -24,7 +24,7 @@
         }
         return v;
     }
-    /*zhenggm 获得焦点时，转为*/
+    /*huangxl 获得焦点时，转为*/
     function focus(target) {
         var state = $.data(target, "numberbox"), $target = $(target);
         var opts = state.options;
@@ -96,7 +96,7 @@
                     $(this).val(opts.formatter.call(this, getValue(this)));
                 $(this).trigger("change");
                 }).bind('focus.numberbox', function () {
-                    //zhenggm
+                    //huangxl
                     focus(this);
                     var vv = getValue(this);
                     if ($(this).val() != vv) {

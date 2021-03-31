@@ -19,7 +19,6 @@
             </div>
             <div style="display: inline;float:left;margin-top: 10px;">
                 ${corpName}
-                <span style="font-size: small;font-family: 'Adobe 楷体 Std R'">-内部管控评价系统</span>
             </div>
         </div>
         <ul class="ui-skin-nav">

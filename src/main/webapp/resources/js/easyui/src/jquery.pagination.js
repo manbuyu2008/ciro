@@ -144,7 +144,7 @@
     function selectPage(target, page) {
         var state = $.data(target, 'pagination');
         var opts = state.options;
-        /*zhenggm：增加切换页事件*/
+        /*huangxl：增加切换页事件*/
         if (opts.onBeforeSelectPage && !opts.onBeforeSelectPage(page)) return;
         refreshData(target, {pageNumber:page}, state);
         opts.onSelectPage.call(target, opts.pageNumber, opts.pageSize);

@@ -495,7 +495,7 @@
      * draw tree lines
      */
     function showLines(target, ul, called, state) {
-        //zhenggm：动态创建树时，前次未渲染完，立即删除会报错
+        //huangxl：动态创建树时，前次未渲染完，立即删除会报错
         if (!state) state = $.data(target, 'tree');
         if (!state) return;
         var opts = state.options;

@@ -110,7 +110,7 @@
             state.tip = tip;
         }
         tip.find('.validatebox-tip-content').html(msg);
-        /*zhenggm：提示超出屏幕，处理下位置*/
+        /*huangxl：提示超出屏幕，处理下位置*/
         /*tip.css({
          display:'block',
          left:box.offset().left + box.outerWidth(),

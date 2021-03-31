@@ -181,7 +181,7 @@
         }
 
         // create region panel
-        //zhenggm 当panell不允许收缩时，去掉收缩按钮
+        //huangxl 当panell不允许收缩时，去掉收缩按钮
         var opt = $.extend({}, {
             width: (pp.length ? parseInt(pp[0].style.width) || pp.outerWidth() : 'auto'),
             height: (pp.length ? parseInt(pp[0].style.height) || pp.outerHeight() : 'auto'),

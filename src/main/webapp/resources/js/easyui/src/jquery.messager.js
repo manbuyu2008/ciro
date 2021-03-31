@@ -157,7 +157,7 @@
                 },
                 onBeforeClose: function () {
                     hide(this);
-                    /*zhenggm：去掉效果, opts.showType, opts.showSpeed*/
+                    /*huangxl：去掉效果, opts.showType, opts.showSpeed*/
                     return false;
                 },
                 onResize: function () {

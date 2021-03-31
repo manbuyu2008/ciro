@@ -7,14 +7,14 @@ $.fn.combo = function(options, param){
 		options = options || {};
 		return this.each(function(){
 			var state = $.data(this, 'combo');
-            /*zhenggm 默认宽度为input的宽度*/
+            /*huangxl 默认宽度为input的宽度*/
             if (!options.width || options.width == 'auto') {
                 options.width=$(this).outerWidth();
             }
         ....
 2、combotree增加onBeforeClick事件
         onClick: function(node){
-        /*zhenggm 增加beforeclick事件*/
+        /*huangxl 增加beforeclick事件*/
         if (opts.onBeforeClick && !opts.onBeforeClick.call(this,node)) return;
         ...
 
@@ -28,7 +28,7 @@ function buildGrid(target) {
                 pageSize:opts.pageSize,
                 pageList:opts.pageList,
                 onSelectPage:function (pageNum, pageSize) {
-                    /*zhenggm：增加切换页事件*/
+                    /*huangxl：增加切换页事件*/
                     if (opts.onBeforeSelectPage && !opts.onBeforeSelectPage()) return;
                     // save the page state
                     opts.pageNumber = pageNum;
@@ -48,7 +48,7 @@ function createColumnHeader(container, columns, frozen) {
 
 5、datagrid：修正bug：排序字段为空时，直接返回
      function getColumnOption(target, field) {
-             /*zhenggm：排序字段为空时，直接返回*/
+             /*huangxl：排序字段为空时，直接返回*/
              if (!field) return undefined;
              /*end*/
 
@@ -56,7 +56,7 @@ function createColumnHeader(container, columns, frozen) {
 function endEdit(target, index, cancel) {
              ...
         if (!cancel) {
-            /*zhenggm:endEdit时不再校验，外部自行校验*/
+            /*huangxl:endEdit时不再校验，外部自行校验*/
             //if (!validateRow(target, index)) return;	// invalid row data
             /*end*/
             var changed = false;
@@ -184,7 +184,7 @@ function endEdit(target, index, cancel) {
         getPager:function (jq) {
             return $.data(jq[0], 'datagrid').panel.find('div.datagrid-pager');
         },
-        getToolbar:function (jq) {//zhenggm 增加返回toolbar的方法
+        getToolbar:function (jq) {//huangxl 增加返回toolbar的方法
             return $.data(jq[0], "datagrid").panel.find("div.datagrid-toolbar");
         },
 
@@ -192,7 +192,7 @@ function endEdit(target, index, cancel) {
                 onBeforeClose: function(){
 					hide(this, opts.showType, opts.showSpeed)
 					===>
-					hide(this); /*zhenggm：去掉效果, opts.showType, opts.showSpeed*/
+					hide(this); /*huangxl：去掉效果, opts.showType, opts.showSpeed*/
 
 					return false;
 				}
@@ -225,7 +225,7 @@ function endEdit(target, index, cancel) {
    		var pageNumber = page;
    		if (page < 1) pageNumber = 1;
    		if (page > pageCount) pageNumber = pageCount;
-           /*zhenggm：增加切换页事件*/
+           /*huangxl：增加切换页事件*/
            if(opts.onBeforeSelectPage && !opts.onBeforeSelectPage()) return;
    		opts.pageNumber = pageNumber;
    		opts.onSelectPage.call(target, pageNumber, opts.pageSize);
@@ -236,7 +236,7 @@ function endEdit(target, index, cancel) {
 function showTip(target){
 .....
    tip.find('.validatebox-tip-content').html(msg);
-           /*zhenggm：提示超出屏幕，处理下位置*/
+           /*huangxl：提示超出屏幕，处理下位置*/
    		/*tip.css({
    			display:'block',
    			left:box.offset().left + box.outerWidth(),
@@ -255,7 +255,7 @@ function showTip(target){
 function setSize(target, width){
 ...
 
-//zhenggm:修正IE下的bug，子宽度超长，下一句父宽度会设置无效
+//huangxl:修正IE下的bug，子宽度超长，下一句父宽度会设置无效
                  var ct = combo.find('input.combo-text');
                  if (!$.boxModel && $.browser.msie) ct.width(opts.width - arrowWidth);
          		combo._outerWidth(opts.width);
@@ -271,7 +271,7 @@ function loadData(target, data) {
         var wrap = $.data(target, 'datagrid').panel;
         var selectedRows = $.data(target, 'datagrid').selectedRows;
         data = opts.loadFilter.call(target, data);
-        //zhenggm 增加onBeforeBind方法，数据加载成功后绑定前
+        //huangxl 增加onBeforeBind方法，数据加载成功后绑定前
         if (opts.onBeforeBind) opts.onBeforeBind.call(target, data);
    ..............
 
@@ -304,7 +304,7 @@ function addPanel(container, param){
      		}, param));
 
    修改后：
-   //zhenggm 当panell不允许收缩时，去掉收缩按钮
+   //huangxl 当panell不允许收缩时，去掉收缩按钮
            var opt = $.extend({}, {
                width:(pp.length ? parseInt(pp[0].style.width) || pp.outerWidth() : 'auto'),
                height:(pp.length ? parseInt(pp[0].style.height) || pp.outerHeight() : 'auto'),

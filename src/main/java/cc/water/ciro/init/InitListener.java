@@ -6,7 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Created by Zhenggm at 11-7-21 上午9:52
+ * Created by huangxl at 11-7-21 上午9:52
  * 系统启动时执行
  */
 public final class InitListener implements ServletContextListener {
