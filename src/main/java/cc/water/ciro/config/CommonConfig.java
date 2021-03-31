@@ -14,9 +14,6 @@ public class CommonConfig {
     @Value("${commonConfig.useCollapsed}")
     private boolean useCollapsed = true;
 
-    @Value("${commonConfig.platformName}")
-    private String platformName;
-
     @Value("${commonConfig.copyRight}")
     private String copyRight;
 
@@ -27,10 +24,6 @@ public class CommonConfig {
 
     public boolean getUseVerifyCode() {
         return useVerifyCode;
-    }
-
-    public String getPlatformName() {
-        return platformName;
     }
 
     public String getCopyRight() {

@@ -24,7 +24,6 @@ http://www.springframework.org/schema/context
 
 
     <!--系统参数配置-->
-    <!--<util:properties id="sysConfigParams" location="classpath:properties/sysconfig.properties" />-->
     <!-- 读取配置文件 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">

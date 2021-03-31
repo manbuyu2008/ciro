@@ -67,7 +67,7 @@ public class EvalReportController extends ListController<EvalBaseInfo> {
         EvalZq evalZq = new EvalZq();
         if (StringUtil.isEmptyEx(periodId)) {
             EvalZqQuery evalZqQuery = new EvalZqQuery();
-            evalZqQuery.setStatus(EvalZqStatusEnum.END.getCode());
+//            evalZqQuery.setStatus(EvalZqStatusEnum.END.getCode());
             evalZqQuery.setStrOrder(" end_date desc");
             Pagination<EvalZq> pagination = evalZqService.getEvalZqWithPage(evalZqQuery);
             if (pagination != null && pagination.getRows() != null && pagination.getRows().size() > 0) {
