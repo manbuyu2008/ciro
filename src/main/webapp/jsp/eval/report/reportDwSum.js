@@ -23,7 +23,7 @@ page = $.extend(page, {
             coco.utils.msg.slideError("打印失败：请选择考评周期！");
             return;
         }
-        var href = "/eval/report/reportDwSumPrint.vm?periodId=" + periodId + "&t=" + Math.random();
+        var href = pageParam.CONTEXT_PATH+"/eval/report/reportDwSumPrint.vm?periodId=" + periodId + "&t=" + Math.random();
         window.parent.addTab("考评结果表打印", href);
     }
 });

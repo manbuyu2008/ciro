@@ -93,7 +93,7 @@ page = $.extend(page, {
         return "<a href='###' style='color: #0D5BA1' class='vp_opt' onclick=page.doOperator('" + value + "')>明细</a>";
     },
     doOperator: function (value) {
-        var href = "/eval/evalBaseInfo/cardSelf.vm?id=" + value + "&view=true&t=" + Math.random();
+        var href = pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/cardSelf.vm?id=" + value + "&view=true&t=" + Math.random();
         window.parent.addTab("人员考评明细", href);
     }
 });

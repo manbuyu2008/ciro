@@ -112,7 +112,7 @@ page = $.extend(page, {
     },
     print: function () {
         var value = $("#id").val();
-        var href = "/eval/evalBaseInfo/print.vm?id=" + value + "&t=" + Math.random();
+        var href = pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/print.vm?id=" + value + "&t=" + Math.random();
         window.parent.addTab("人员考评明细打印", href);
     },
     reject: function () {

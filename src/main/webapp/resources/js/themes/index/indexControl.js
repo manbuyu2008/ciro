@@ -340,7 +340,7 @@ function dwHandleFormatter(value, rowData, rowIndex) {
 
 //编辑
 function editDwEx(id) {
-    var s = "/eval/evalBaseInfo/cardDw.vm?id=" + id + "&t=" + Math.random();
+    var s = pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/cardDw.vm?id=" + id + "&t=" + Math.random();
     window.top.addTab("单位考评", s);
 }
 
@@ -355,7 +355,7 @@ function dksHandleFormatter(value, rowData, rowIndex) {
 
 //编辑
 function editDksEx(id) {
-    var s = "/eval/evalBaseInfo/cardDk.vm?id=" + id + "&t=" + Math.random();
+    var s = pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/cardDk.vm?id=" + id + "&t=" + Math.random();
     window.top.addTab("大科总支考评", s);
 }
 
@@ -370,6 +370,6 @@ function ksHandleFormatter(value, rowData, rowIndex) {
 
 //编辑
 function editKsEx(id) {
-    var s = "/eval/evalBaseInfo/cardKs.vm?id=" + id + "&t=" + Math.random();
+    var s = pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/cardKs.vm?id=" + id + "&t=" + Math.random();
     window.top.addTab("科室考评", s);
 }
