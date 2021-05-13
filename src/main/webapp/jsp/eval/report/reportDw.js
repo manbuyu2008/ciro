@@ -88,7 +88,7 @@ page = $.extend(page, {
     next: function (id) {
         var v_zq = zqCombo.getValue();
         var param = "?ksId=" + id + "&zq=" + v_zq;
-        var href = '/eval/report/reportKs.vm' + param;
+        var href = pageParam.CONTEXT_PATH+'/eval/report/reportKs.vm' + param;
         window.top.addTab("科室考评统计查询",href);
     }
 });

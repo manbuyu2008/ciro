@@ -88,7 +88,7 @@ page = $.extend(page, {
     next: function (deptId,userTypeId) {
         var v_zq = zqCombo.getValue();
         var param = "?ksId=" + deptId + "&zq=" + v_zq+ "&userTypeId=" + userTypeId;
-        var href = '/eval/report/reportUser.vm' + param;
+        var href = pageParam.CONTEXT_PATH+'/eval/report/reportUser.vm' + param;
         window.top.addTab("人员考评明细查询",href);
     }
 });

@@ -125,7 +125,7 @@ page = $.extend(page, {
     },
     next: function (deptId, periodId,title,type) {
         var param = "?ksId=" + deptId + "&zq=" + periodId+ "&type=" + type+ "&title=" + title;
-        var href = '/eval/report/reportUserData.vm' + param;
+        var href = pageParam.CONTEXT_PATH+'/eval/report/reportUserData.vm' + param;
         window.top.addTab(title, href);
     }
 });
