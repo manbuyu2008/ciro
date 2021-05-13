@@ -2,10 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ include file="/jsp/sys/common/common.jsp" %>
 <title>单位考评统计表</title>
-<script type="text/javascript" src="/jsp/sys/common/common_list.js"></script>
-<script type="text/javascript" src="/resources/js/themes/index/indexLook.js"></script>
-<script type="text/javascript" src="/jsp/eval/report/reportDw.js"></script>
-<script type="text/javascript" src="/resources/js/themes/base/base.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/sys/common/common_list.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/index/indexLook.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/eval/report/reportDw.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/base/base.js"></script>
 </head>
 <body class="easyui-layout">
 <div region="north" style="overflow:hidden;height:35px;" border="false">

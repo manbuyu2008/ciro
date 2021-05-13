@@ -2,9 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ include file="/jsp/sys/common/common.jsp" %>
 <title>考评期间</title>
-<script type="text/javascript" src="/jsp/sys/common/common_card.js"></script>
-<script type="text/javascript" src="/resources/js/themes/base/base.js"></script>
-<script type="text/javascript" src="/jsp/eval/report/reportDwSum.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/sys/common/common_card.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/base/base.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/eval/report/reportDwSum.js"></script>
 </head>
 <body style="text-align: center;">
 <div style="overflow:hidden;margin-bottom:15px;margin-top:0px;height:35px" border="false"

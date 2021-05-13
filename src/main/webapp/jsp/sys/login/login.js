@@ -29,7 +29,7 @@ var v_login = {
             }, function (state, result, msg) {
                 if (state) {
                     $.cookie("loginCode", code);// 一周
-                    window.location = "/admin/index.vm";
+                    window.location = pageParam.CONTEXT_PATH+"/admin/index.vm";
                 } else {
                     $('#imgVerifyCode').attr('src', 'verifyCode.vm?t=' + Math.random());
                     var focusId;

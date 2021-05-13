@@ -19,15 +19,15 @@
 <meta name="description" content="">
 <meta name="author" content="huangxl">
 <!-- CSS -->
-<link rel="stylesheet" href="/resources/css/themes/login/style.css">
-<script type="text/javascript" src="/resources/js/jquery/jquery.cookie.js"></script>
-<script src="/jsp/sys/login/login.js"></script>
+<link rel="stylesheet" href="<%=CONTEXT_PATH%>/resources/css/themes/login/style.css">
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/jquery/jquery.cookie.js"></script>
+<script src="<%=CONTEXT_PATH%>/jsp/sys/login/login.js"></script>
 </head>
 <body>
 <div class="login">
     <div class="login-top">
         <%--<h1>用户登录</h1>--%>
-            <h1>${platformName}</h1>
+        <h1>${platformName}</h1>
         <form>
             <input type="text" id="code" name="code" class="code" required="true"
                    value="请输入用户帐号"
@@ -60,5 +60,10 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var pageParam = $.extend({
+        CONTEXT_PATH: '<%=CONTEXT_PATH%>'
+    }, pageParam || {});
+</script>
 </html>
 

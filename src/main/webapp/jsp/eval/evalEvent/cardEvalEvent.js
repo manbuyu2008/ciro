@@ -51,7 +51,7 @@ var
                         $.ajax({
                             type: "POST",
                             async: false,
-                            url: '/front/file/fileDel.vm;jsessionid=' + jsessionid,//请求路径
+                            url: pageParam.CONTEXT_PATH+'/front/file/fileDel.vm;jsessionid=' + jsessionid,//请求路径
                             data: {fileId: fileValue},
                             success: function (data) {
                                 if (data.state) {

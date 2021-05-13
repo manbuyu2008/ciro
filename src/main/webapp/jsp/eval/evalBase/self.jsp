@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <script type="text/javascript"
-        src="/jsp/eval/evalBase/self.js"></script>
+        src="<%=CONTEXT_PATH%>/jsp/eval/evalBase/self.js"></script>
 
 <tr style="font-weight: normal;text-align: left;">
     <td colspan="13" valign="top">

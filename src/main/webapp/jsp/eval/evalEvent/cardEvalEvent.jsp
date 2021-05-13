@@ -2,9 +2,9 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"%>
 <%@ include file="/jsp/sys/common/common.jsp" %>
 <title>考评加减分档案</title>
-<script type="text/javascript" src="/jsp/sys/common/common_card.js"></script>
-<script type="text/javascript" src="/resources/js/themes/base/base.js"></script>
-<script type="text/javascript" src="/jsp/eval/evalEvent/cardEvalEvent.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/sys/common/common_card.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/base/base.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/eval/evalEvent/cardEvalEvent.js"></script>
 <style type="text/css">
     body {
         font: 13px Arial, Helvetica, Sans-serif;

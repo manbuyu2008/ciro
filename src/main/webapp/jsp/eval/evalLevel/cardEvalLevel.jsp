@@ -2,9 +2,9 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"%>
 <%@ include file="/jsp/sys/common/common.jsp" %>
 <title>考评等级管理</title>
-<script type="text/javascript" src="/jsp/sys/common/common_card.js"></script>
-<script type="text/javascript" src="/jsp/eval/evalLevel/cardEvalLevel.js"></script>
-<script type="text/javascript" src="/resources/js/themes/base/base.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/sys/common/common_card.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/jsp/eval/evalLevel/cardEvalLevel.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/base/base.js"></script>
 </head>
 <body class="easyui-layout">
 <div region="north" style="overflow:hidden;height:35px;" border="false">

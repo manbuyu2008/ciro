@@ -93,7 +93,7 @@ var selfPage = $.extend(selfPage, {
             singleSelect: true,
             rownumbers: true,
             collapsible: true,
-            url: '/eval/evalComment/data.vm',
+            url: pageParam.CONTEXT_PATH+'/eval/evalComment/data.vm',
             queryParams: dataParams,
             remoteSort: false,
             onDblClickRow: function (rowIndex, rowData) {

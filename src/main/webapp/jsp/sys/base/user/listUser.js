@@ -78,7 +78,7 @@ page = $.extend(page, {
     UpladFile: function(){
         var formData = new FormData($("#importExcelForm")[0]);
         $.ajax({
-            url: '/eval/evalImport/userImport.vm',
+            url: pageParam.CONTEXT_PATH+'/eval/evalImport/userImport.vm',
             type: 'POST',
             data: formData,
             async: false,

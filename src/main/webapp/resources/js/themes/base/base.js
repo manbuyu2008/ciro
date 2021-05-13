@@ -1,12 +1,12 @@
 ﻿$(function() {
     var themes = {
-        'gray' : '/resources/css/themes/sys/gray/easyui.css',
-        'pepper-grinder' : '/resources/css/themes/sys/pepper-grinder/easyui.css',
-        'blue' : '/resources/css/themes/sys/default/easyui.css',
-        'cupertino' : '/resources/css/themes/sys/cupertino/easyui.css',
-        'dark-hive' : '/resources/css/themes/sys/dark-hive/easyui.css',
-        'bootstrap' : '/resources/css/themes/sys/bootstrap/easyui.css',
-        'sunny' : '/resources/css/themes/sys/sunny/easyui.css'
+        'gray' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/gray/easyui.css',
+        'pepper-grinder' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/pepper-grinder/easyui.css',
+        'blue' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/default/easyui.css',
+        'cupertino' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/cupertino/easyui.css',
+        'dark-hive' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/dark-hive/easyui.css',
+        'bootstrap' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/bootstrap/easyui.css',
+        'sunny' : pageParam.CONTEXT_PATH+'/resources/css/themes/sys/sunny/easyui.css'
     };
     //if(getCookie('cs-skin')) {
     //    var skin = getCookie('cs-skin');

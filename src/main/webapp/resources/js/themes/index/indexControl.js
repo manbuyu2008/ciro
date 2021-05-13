@@ -62,7 +62,7 @@ function serverLogin() {
     } else {
         if (result == "user") {
             alert(message);
-            window.location = "/login/login.vm";
+            window.location = pageParam.CONTEXT_PATH+"/login/login.vm";
             return false;
         } else if (result == "error") {
             coco.utils.msg.error(message);
@@ -92,7 +92,7 @@ $(function () {
             {
                 iconCls: 'icon-redo',
                 handler: function () {
-                    window.top.addTab("个人自评", "/eval/evalBaseInfo/listSelf.vm");
+                    window.top.addTab("个人自评", pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/listSelf.vm");
                 }
             }],
         onOpen: function () {
@@ -124,7 +124,7 @@ $(function () {
             {
                 iconCls: 'icon-redo',
                 handler: function () {
-                    window.top.addTab("科室考评", "/eval/evalBaseInfo/listKs.vm");
+                    window.top.addTab("科室考评", pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/listKs.vm");
                 }
             }],
         onOpen: function () {
@@ -161,7 +161,7 @@ $(function () {
             {
                 iconCls: 'icon-redo',
                 handler: function () {
-                    window.top.addTab("大科总支考评", "/eval/evalBaseInfo/listDk.vm");
+                    window.top.addTab("大科总支考评", pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/listDk.vm");
                 }
             }],
         onOpen: function () {
@@ -193,7 +193,7 @@ $(function () {
             {
                 iconCls: 'icon-redo',
                 handler: function () {
-                    window.top.addTab("单位考评", "/eval/evalBaseInfo/listDw.vm");
+                    window.top.addTab("单位考评", pageParam.CONTEXT_PATH+"/eval/evalBaseInfo/listDw.vm");
                 }
             }
         ],
@@ -232,7 +232,7 @@ function initSelfPanel() {
         fit: true,
         fitColumns: true,
         striped: true,
-        url: '/eval/evalBaseInfo/dataSelf.vm',
+        url: pageParam.CONTEXT_PATH+'/eval/evalBaseInfo/dataSelf.vm',
         queryParams: dataParams,
         pageList: [20, 50, 100],
         pagination: false,
@@ -254,7 +254,7 @@ function initKsPanel() {
         fit: true,
         fitColumns: true,
         striped: true,
-        url: '/eval/evalBaseInfo/dataKs.vm',
+        url: pageParam.CONTEXT_PATH+'/eval/evalBaseInfo/dataKs.vm',
         queryParams: dataParams,
         pageList: [20, 50, 100],
         pagination: true,
@@ -278,7 +278,7 @@ function initDksPanel() {
         fit: true,
         fitColumns: true,
         striped: true,
-        url: '/eval/evalBaseInfo/dataDk.vm',
+        url: pageParam.CONTEXT_PATH+'/eval/evalBaseInfo/dataDk.vm',
         queryParams: dataParams,
         pageList: [20, 50, 100],
         pagination: true,
@@ -302,7 +302,7 @@ function initDwPanel() {
         fit: true,
         fitColumns: true,
         striped: true,
-        url: '/eval/evalBaseInfo/dataDw.vm',
+        url: pageParam.CONTEXT_PATH+'/eval/evalBaseInfo/dataDw.vm',
         queryParams: dataParams,
         pageList: [20, 50, 100],
         pagination: true,

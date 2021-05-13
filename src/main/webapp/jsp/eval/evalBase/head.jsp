@@ -1,6 +1,6 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"%>
 <script type="text/javascript"
-        src="/jsp/eval/evalBase/head.js"></script>
+        src="<%=CONTEXT_PATH%>/jsp/eval/evalBase/head.js"></script>
 <style type="text/css">
     .vp_input_100_100 {
         width: 90%;

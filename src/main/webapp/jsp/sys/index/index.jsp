@@ -6,16 +6,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="huangxl">
-<link rel="stylesheet" type="text/css" href="/resources/css/themes/sys/index.css"/>
-<script type="text/javascript" src="/resources/js/themes/index/indexLook.js"></script>
-<script type="text/javascript" src="/resources/js/themes/index/indexControl.js"></script>
+<script type="text/javascript">
+    var bc_ks = <%=EvalFlowStatusEnum.KP_KS_SAVE.getValue()%>;
+    var bc_dks = <%=EvalFlowStatusEnum.KP_DKS_SAVE.getValue()%>;
+    var bc_dw = <%=EvalFlowStatusEnum.KP_DW_SAVE.getValue()%>;
+    var pageParam = $.extend({
+        CONTEXT_PATH: '<%=CONTEXT_PATH%>'
+    }, pageParam || {});
+</script>
+<link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/css/themes/sys/index.css"/>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/index/indexLook.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/index/indexControl.js"></script>
 </head>
 <body class="easyui-layout">
 <div region="north" border="true" class="cs-north">
     <div class="cs-north-bg">
         <div class="cs-north-logo">
             <div style="width:80px;display: inline;float:left; ">
-                <img src="/resources/image/index/logo.jpg" width="80" height="55" align="middle"/>
+                <img src="<%=CONTEXT_PATH%>/resources/image/index/logo.jpg" width="80" height="55" align="middle"/>
             </div>
             <div style="display: inline;float:left;margin-top: 10px;">
                 ${corpName}
@@ -128,10 +136,5 @@
     <div id="mm-tabcloseright">右侧关闭</div>
     <div id="mm-tabcloseleft">左侧关闭</div>
 </div>
-<script type="text/javascript">
-    var bc_ks = <%=EvalFlowStatusEnum.KP_KS_SAVE.getValue()%>;
-    var bc_dks = <%=EvalFlowStatusEnum.KP_DKS_SAVE.getValue()%>;
-    var bc_dw = <%=EvalFlowStatusEnum.KP_DW_SAVE.getValue()%>;
-</script>
 </body>
 </html>

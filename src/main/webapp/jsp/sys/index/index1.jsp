@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="huangxl">
-<link rel="stylesheet" type="text/css" href="/resources/css/themes/sys/index.css"/>
-<script type="text/javascript" src="/resources/js/themes/index/indexLook.js"></script>
-<script type="text/javascript" src="/resources/js/themes/index/indexControl.js"></script>
-<script type="text/javascript" src="/resources/js/build/theme/roma.js"></script>
-<script type="text/javascript" src="/resources/js/build/dist/echarts.js"></script>
-<script type="text/javascript" src="/resources/js/build/Echart.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/css/themes/sys/index.css"/>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/index/indexLook.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/themes/index/indexControl.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/build/theme/roma.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/build/dist/echarts.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/build/Echart.js"></script>
 </head>
 <body class="easyui-layout">
 <div region="north" border="true" class="cs-north">
     <div class="cs-north-bg">
         <div class="cs-north-logo">
             <div style="width:80px;display: inline;float:left; ">
-                <img src="/resources/image/index/logo.jpg" width="80" height="55" align="middle"/>
+                <img src="<%=CONTEXT_PATH%>/resources/image/index/logo.jpg" width="80" height="55" align="middle"/>
             </div>
             <div style="display: inline;float:left;margin-top: 10px;">
                 ${corpName}
