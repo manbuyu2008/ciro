@@ -11,7 +11,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
  */
 public class Test {
     public static void main(String[] args) throws Exception {
-        String corpName = "徐州市医德医风考评系统";
+        String corpName = "某某市医德医风考评系统";
         String test =  DES.strDefaultKey;
         DES des = new DES("ydyf");// 自定义密钥
         System.out.println("加密前的字符：" + test);
