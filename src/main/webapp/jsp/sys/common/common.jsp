@@ -48,8 +48,11 @@
     <script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/coco/coco.plugin.combo.js"></script>
     <link rel="stylesheet" href="<%=CONTEXT_PATH%>/resources/css/common.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/css/themes/sys/default.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/js/uploadify/uploadify.css">
-    <script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/uploadify/jquery.uploadify.js"></script>
+<%--    <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/js/uploadify/uploadify.css">--%>
+<%--    <script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/uploadify/jquery.uploadify.js"></script>--%>
+    <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/js/uploadify/uploadifive.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="<%=CONTEXT_PATH%>/resources/js/uploadify/jquery.uploadifive.js" type="text/javascript"></script>
+
     <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/css/themes/sys/bootstrap/easyui.css"
           id="swicth-style"/>
     <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/resources/css/themes/sys/icon.css"/>

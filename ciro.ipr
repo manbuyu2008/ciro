@@ -483,13 +483,6 @@
       <option name="url" value="http://47.102.108.92:8081/repository/maven-public/" />
     </remote-repository>
   </component>
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/webapp/sql/1_base.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/sql/2_yw_create.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/sql/3_dataInit.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/sql/3_eval.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/sys.sql" dialect="MySQL" />
-  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>

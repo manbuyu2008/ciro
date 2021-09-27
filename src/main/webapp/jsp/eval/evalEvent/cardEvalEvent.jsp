@@ -105,6 +105,7 @@
         <tr class="p_tr">
             <td nowrap class="p_td_lbl">档案附件：</td>
             <td nowrap class="vp_txt" colspan="3">
+                <div id="fileQueueInit"></div>
                 <div id="fileQueue"></div>
                 <input type="file" id="fileId" name="fileId" value="文件上传"/>
             </td>

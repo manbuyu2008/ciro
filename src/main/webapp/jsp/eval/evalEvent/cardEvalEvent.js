@@ -11,79 +11,100 @@ var
     page = $.extend(page, {
         _init: function () {
             $('#form').form('load', pageParam.jsonObject);
-            $("#fileId").uploadify({
-                'auto': true, //是否自动上传
-                'buttonText': '文件上传',//按钮上的文字
-                'swf': '/resources/js/uploadify/uploadify.swf?t=' + (new Date()).getTime(),  //引入uploadify.swf
-                'uploader': '/front/file/fileUpload.vm;jsessionid=' + jsessionid,//请求路径
-                'queueID': 'fileQueue',//队列id,用来展示上传进度的
-                'width': '75',  //按钮宽度
-                'height': '24',  //按钮高度
-                'preventCaching': true,
-                'queueSizeLimit': 8,  //同时上传文件的个数
-                'uploadLimit': 8,
-                'fileTypeDesc': '文件',    //可选择文件类型说明
-                removeTimeout: 1,
-                'multi': true,  //允许多文件上传
-                'fileSizeLimit': '10MB', //设置单个文件大小限制
-                'fileObjName': 'fileId',  //<input type="file"/>的name
-                'method': 'post',
-                'formData': {'userId': userId}, //动态传参
-                'removeCompleted': false,//上传完成后自动删除队列
-                'onFallback': function () {
-                    alert("您未安装FLASH控件，无法上传图片！请安装FLASH控件后再试。");
-                },
-                //每次初始化一个队列是触发
-                'onInitEx': function (swfuploadify, swfUploadSettings) {
-                    var file = fileInitList;
-                    swfuploadify.settings.initSize = file.length;
-                    for (var i = 0; i < file.length; i++) {
-                        swfUploadSettings.file_queued_handler_ex(file[i], swfuploadify);
-                        $('#' + file[i].id).find('.cancel').append("<input type='hidden' id='" + file[i].id + "_value' name='fileValue' value='" + file[i].id + "'/>");
-                        $('#' + file[i].id).find('.data').html("- 上传成功 <a target='_blank' href='/front/file/fileDown.vm?fileId=" + file[i].id + "' style='color:red;font-family:楷体;font-size:14px;'>[下载]</a>");
-                    }
-                },
-                //删除时触发 新增删除记录 修改等保存再删除
-                'onCancel': function (file) {
-                    $$msg.showWait("正在删除，请稍候...");
-                    var fileValue = $('#' + file.id + '_value').val();
-                    if (fileValue != "" && $("#id").val() == "") {
-                        $.ajax({
-                            type: "POST",
-                            async: false,
-                            url: pageParam.CONTEXT_PATH+'/front/file/fileDel.vm;jsessionid=' + jsessionid,//请求路径
-                            data: {fileId: fileValue},
-                            success: function (data) {
-                                if (data.state) {
-                                    file.state = true;
-                                    //$$msg.slideMsg("删除附件成功！");
-                                } else {
-                                    file.state = false;
-                                    $$msg.slideError(data.msg);
-                                }
-                                $$msg.closeWait();
-                            },
-                            dataType: "json"
-                        });
-                    } else {
-                        file.state = true;
-                        $$msg.closeWait();
-                    }
-                },
-                //上传成功
-                'onUploadSuccess': function (file, data, response) {
-                    var dataJson = $.parseJSON(data);
-                    if (dataJson.state) {
-                        file.fileId = dataJson.fileId
-                        $('#' + file.id).find('.data').html("- 上传成功 <a href='/front/file/fileDown.vm?fileId=" + dataJson.fileId + "' target='_blank' style='color:red;font-family:楷体;font-size:14px;'>[下载]</a>");
-                        $('#' + file.id).find('.cancel').append("<input type='hidden' id='" + file.id + "_value' name='fileValue' value='" + dataJson.fileId + "'/>");
-                    } else {
-                        $('#' + file.id).find('.data').html("- <span style='color:red;font-family:楷体;font-size:14px;'>上传失败：" + dataJson.msg + "</span>");
-                        $('#' + file.id).find('.uploadify-progress-bar').css('width', '0%');
-                    }
-                }
-            });
 
+                $("#fileId").uploadifive({
+                    'auto': true, //是否自动上传
+                    'multi': true,//是否允许选择多文件
+                    'buttonClass': 'uploadifive-button',//按钮样式，可以看uploadifive.css。（根据系统风格自行修改颜色等）
+                    'buttonText': '文件上传',//按钮上的文字
+                    'uploadScript': pageParam.CONTEXT_PATH + '/front/file/fileUpload.vm;jsessionid=' + jsessionid,//请求路径
+                    'cancelImg': '<%=path%>/commons/uploadify/uploadifive-cancel.png',
+                    'queueID': 'fileQueue',//队列id,用来展示上传进度的
+                    'width': '75',  //按钮宽度
+                    'height': '24',  //按钮高度
+                    'preventCaching': true,
+                    'queueSizeLimit': 8,  //同时上传文件的个数
+                    'uploadLimit': 8,
+                    'fileTypeDesc': '文件',    //可选择文件类型说明
+                    removeTimeout: 1,
+                    'dnd': true, //是否允许拖放
+                    'fileSizeLimit': '200MB', //设置单个文件大小限制
+                    'fileObjName': 'fileId',  //<input type="file"/>的name
+                    'formData': {'userId': userId}, //动态传参
+                    'removeCompleted': false,//上传完成后自动删除队列
+                    'method': 'post',//提交方式
+                    'overrideEvents': ['onUploadComplete', 'onFallback', 'onInit', 'onError'],//重写方法集合，这个设置关键到下面自己写的方法是否会重写uploadifive.js中默认的方法实现（取消自带的错误提示）
+                    'onFallback': function () {//如果浏览器没有兼容的HTML5文件API功能触发
+                        alert('浏览器不支持HTML5,无法上传！');
+                    },
+                    //每次初始化一个队列是触发
+                    'onInit': function () {
+                        var file = fileInitList;
+                        var settings = $('#fileId').data('uploadifive').settings;
+                        for (var i = 0; i < file.length; i++) {
+                            var content = '<div class="uploadifive-queue-item" id ="uploadifive-fileId-file-has' + i + '">' +
+                                '<input type="hidden" id="' + file[i].id + '_value" name="fileValue" value="' + file[i].id + '"/>' +
+                                '<input type="hidden" id="' + file[i].id + '_close_order"  value="' + i + '"/>' +
+                                '<a id="' + file[i].id + '_close" class="close" href="#">X</a>' +
+                                '<div><span class="filename">' + file[i].name +
+                                '<a target=\'_blank\' href=' + pageParam.CONTEXT_PATH + '/front/file/fileDown.vm?fileId=' + file[i].id + ' style=\'color:red;font-family:楷体;font-size:14px;\'>[下载]</a>' +
+                                '</span><span class="fileinfo"></span></div>' +
+                                '<div class="progress">' +
+                                '<div class="progress-bar"></div>' +
+                                '</div>' +
+                                '</div>';
+                            $('#fileQueueInit').append(content);
+                            $('#' + file[i].id + '_close').bind('click', function (data) {
+                                var k = $('#' + this.id + '_order').val();
+                                page.delFile(fileInitList[k],k);
+                            });
+                        }
+                    },
+                    //删除时触发 新增删除记录 修改等保存再删除
+                    'onCancel': function (file) {
+                        page.delFile(file,-99);
+                    },
+                    'onError': function (errorType, file) {//失败时触发
+                        if (file != 0) {
+                            var settings = $('#uploadifive').data('uploadifive').settings;
+                            switch (errorType) {
+                                case 'UPLOAD_LIMIT_EXCEEDED':
+                                    alert("上传的文件数量已经超出系统限制的" + settings.uploadLimit + "个文件！");
+                                    break;
+                                case 'FILE_SIZE_LIMIT_EXCEEDED':
+                                    alert("文件 [" + file.name + "] 大小超出系统限制的" + $('#file_upload').uploadifive('settings', 'fileSizeLimit') + "大小！");
+                                    break;
+                                case 'QUEUE_LIMIT_EXCEEDED':
+                                    alert("上传任务数量只允许" + settings.queueSizeLimit + "个！");
+                                    break;
+                                case 'Invalid file type.':
+                                case 'FORBIDDEN_FILE_TYPE':
+                                    alert("文件 [" + file.name + "] 类型不正确！");
+                                    break;
+                                case '404_FILE_NOT_FOUND':
+                                    alert("文件未上传成功或服务器存放文件的文件夹不存在");
+                                    break;
+                            }
+                        }
+                    },
+                    //上传成功
+                    'onUploadComplete': function (file, data, response) {
+                        var dataJson = $.parseJSON(data);
+                        var i = $('#fileId').data('uploadifive').fileID - 1;
+                        if (dataJson.state) {
+                            file.fileId = dataJson.fileId
+                            var name = $('#uploadifive-fileId-file-' + i).find('.filename').html();
+                            $('#uploadifive-fileId-file-' + i).find('.filename').html(name + " <a href=" + pageParam.CONTEXT_PATH + "/front/file/fileDown.vm?fileId=" + dataJson.fileId + " target='_blank' style='color:red;font-family:楷体;font-size:14px;'>[下载]</a>");
+                            $('#uploadifive-fileId-file-' + i).find('.close').append("<input type='hidden' id='" + file.id + "_value' name='fileValue' value='" + dataJson.fileId + "'/>");
+                        } else {
+                            $('#fileQueue').find('.data').html("- <span style='color:red;font-family:楷体;font-size:14px;'>上传失败：" + dataJson.msg + "</span>");
+                            $('#fileQueue').find('.uploadify-progress-bar').css('width', '0%');
+                        }
+                    }
+                });
+            if ($("#shResult").val() == "YES") {
+                $("#uploadifive-fileId").hide();
+            }
 
             eventDate = $("#eventDate").datebox({
                 required: true
@@ -184,6 +205,32 @@ var
 
                 }
             });
+        },
+        delFile: function (file,k) {
+            $$msg.showWait("正在删除，请稍候...");
+            var fileValue = $('#' + file.id + '_value').val();
+            if (fileValue != "" && $("#shResult").val() != "YES") {
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: pageParam.CONTEXT_PATH + '/front/file/fileDel.vm;jsessionid=' + jsessionid,//请求路径
+                    data: {fileId: fileValue},
+                    success: function (data) {
+                        if (data.state) {
+                            file.state = true;
+                            $('#uploadifive-fileId-file-has' + k).remove();
+                        } else {
+                            file.state = false;
+                            $$msg.slideError(data.msg);
+                        }
+                        $$msg.closeWait();
+                    },
+                    dataType: "json"
+                });
+            } else {
+                file.state = true;
+                $$msg.closeWait();
+            }
         },
         //返回列表
         list: function () {
@@ -350,6 +397,7 @@ var
             $("#id").val(data["id"]);
             $("#code").val(data["code"]);
             $("#name").val(data["name"]);
+            $("#uploadifive-fileId").show();
         }
     });
 
